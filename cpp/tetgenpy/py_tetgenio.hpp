@@ -241,7 +241,30 @@ public:
     }
 
     /* numberofholes, holelist */
+    const int n_holes = static_cast<int>(holes.size());
+    if (n_holes > 0) {
+      // shape check
+      CheckPyArrayShape(holes, {-1, dim_});
+
+      Base_::numberofholes = n_holes;
+      Base_::holelist = new REAL[n_holes * dim_];
+      std::copy_n(static_cast<REAL*>(holes.request().ptr),
+                  n_holes * dim_,
+                  Base_::holelist);
+    }
+
     /* numberofregions, regionlist */
+    const int n_regions = static_cast<int>(regions.size());
+    if (n_regions > 0) {
+      // shape check
+      CheckPyArrayShape(regions, {-1, n_region_entries_});
+
+      Base_::numberofregions = n_regions;
+      Base_::regionlist = new REAL[n_regions * n_region_entries_];
+      std::copy_n(static_cast<REAL*>(regions.request().ptr),
+                  n_regions * n_region_entries_,
+                  Base_::regionlist);
+    }
   }
 
   // output

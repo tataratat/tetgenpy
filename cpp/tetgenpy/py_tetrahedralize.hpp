@@ -10,8 +10,7 @@ namespace tetgenpy {
 
 namespace py = pybind11;
 
-void
-Tetrahedralize(std::string switches, PyTetgenIo& in, PyTetgenIo& out) {
+void Tetrahedralize(std::string switches, PyTetgenIo& in, PyTetgenIo& out) {
   char* c_switches = switches.data();
   tetrahedralize(c_switches, &in, &out);
 }
