@@ -2,5 +2,5 @@
 
 namespace tetgenpy {
 namespace py = pybind11;
-void init_pytetgenio(py::module_& m) {add_pytetgenio_class(m);}
-}
+void init_pytetgenio(py::module_& m) { add_pytetgenio_class(m); }
+} // namespace tetgenpy

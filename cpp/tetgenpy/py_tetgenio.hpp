@@ -4,8 +4,8 @@
 
 #include <tetgen.h>
 
-#include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
+#include <pybind11/pybind11.h>
 
 #include <tetgenpy/print.hpp>
 
@@ -22,10 +22,10 @@ static bool CheckPyArrayShape(const py::array_t<ValueType> arr,
     if (!throw_)
       return false;
     PrintAndThrowError("Array dim mismatch.",
-                           "Expected -",
-                            expected_dim,
-                            "Given -",
-                            arr.ndim());
+                       "Expected -",
+                       expected_dim,
+                       "Given -",
+                       arr.ndim());
   }
   const py::ssize_t* arrshape = arr.shape();
   for (std::size_t i{}; i < expected_dim; ++i) {
@@ -37,13 +37,13 @@ static bool CheckPyArrayShape(const py::array_t<ValueType> arr,
         if (!throw_)
           return false;
         PrintAndThrowError("Array shape mismatch",
-                                            "in dimension [",
-                                            i,
-                                            "].",
-                                            "Expected -",
-                                            shape_i,
-                                            "Given -",
-                                            arrshape[i]);
+                           "in dimension [",
+                           i,
+                           "].",
+                           "Expected -",
+                           shape_i,
+                           "Given -",
+                           arrshape[i]);
       }
     }
   }
@@ -62,7 +62,7 @@ public:
   static const int n_tetrahedron_vertices_order2_{10};
 
   // default ctor initializes. dtor clears.
-  PyTetgenIo() {Base_::initialize();}
+  PyTetgenIo() { Base_::initialize(); }
 
   /// load full set of input
   /// split input facets into 2 types:
@@ -79,20 +79,19 @@ public:
   /// h_facets: list
   ///   nested list for self contained facet description with holes list,
   ///   as well as marker.
-  ///   [list of h_facet coordinates, list of holes, facet marker]
+  ///   [list of h_facet polygons, list of holes, facet marker]
   /// holes: (b, 3) np.ndarray
   ///   list of holes. this pokes holes.
   /// regions: (c, 5) np.ndarray
   ///   list of regions.
   ///   coordinate to mark the region, region attribute, max volume
-  void Setup(
-      py::array_t<REAL> points,
-      py::list facets,
-      py::array_t<int> facet_markers,
-      py::list h_facets,
-      py::array_t<REAL> holes,
-      py::array_t<REAL> regions,
-      bool debug=false) {
+  void Setup(py::array_t<REAL> points,
+             py::list facets,
+             py::array_t<int> facet_markers,
+             py::list h_facets,
+             py::array_t<REAL> holes,
+             py::array_t<REAL> regions,
+             bool debug = false) {
 
     PrintDebug(debug, "Starting PyTetgenIo::Load");
 
@@ -107,16 +106,15 @@ public:
     PrintDebug(debug, "set numberofpoints:", Base_::numberofpoints);
 
     Base_::pointlist = new REAL[Base_::numberofpoints * dim_];
-    std::copy_n(
-        static_cast<REAL*>(points.request().ptr),
-        Base_::numberofpoints * dim_,
-        Base_::pointlist);
+    std::copy_n(static_cast<REAL*>(points.request().ptr),
+                Base_::numberofpoints * dim_,
+                Base_::pointlist);
     PrintDebug(debug, "set pointlist.");
 
     /* numberoffacets, facetlist, facetmarkerlist */
-    const int n_facets = static_cast<int>(facets.size()); 
-    const int n_facet_markers = static_cast<int>(facet_markers.size()); 
-    const int n_h_facets = static_cast<int>(h_facets.size()); 
+    const int n_facets = static_cast<int>(facets.size());
+    const int n_facet_markers = static_cast<int>(facet_markers.size());
+    const int n_h_facets = static_cast<int>(h_facets.size());
     Base_::numberoffacets = n_facets + n_h_facets;
     Base_::facetlist = new Base_::facet[Base_::numberoffacets];
     PrintDebug(debug, "set numberoffacets:", Base_::numberoffacets);
@@ -124,12 +122,13 @@ public:
     PrintDebug(debug, "-> number of facets with holes:", n_h_facets);
 
     // following sizes should match
+    // facet markers for h_facets will be added later
     if (n_facet_markers != 0 && n_facets != n_facet_markers) {
-      PrintAndThrowError(
-        "facets and facet_markers should have same size.",
-        "facets:", n_facets,
-        "/ facet_markers:", n_facet_markers
-      );
+      PrintAndThrowError("facets and facet_markers should have same size.",
+                         "facets:",
+                         n_facets,
+                         "/ facet_markers:",
+                         n_facet_markers);
     }
 
     // loop and fillout facets
@@ -167,13 +166,76 @@ public:
     if (n_facet_markers != 0) {
       Base_::facetmarkerlist = new int[Base_::numberoffacets];
       std::copy_n(static_cast<int*>(facet_markers.request().ptr),
-                  Base_::numberoffacets,
+                  // Base_::numberoffacets, //
+                  n_facets, //
                   Base_::facetmarkerlist);
-      PrintDebug(debug, "set facetmarkerlist.");
+      PrintDebug(debug, "set facetmarkerlist for facets.");
     }
 
     // fill h_facets
-    for (int i{n_facets}; i < Base_::numberoffacets; ++i) {
+    int h{n_facets}; // hfacet counter
+    for (py::handle hf : h_facets) {
+      // index hints
+      // 0. -> list of list (polygons; int)
+      // 1. -> list of list (holes; double)
+      // 2. -> facet marker (;int)
+      const auto hf_description = hf.cast<py::list>();
+      const auto list_of_polygons = hf_description[0].cast<py::list>();
+      const auto list_of_holes = hf_description[1].cast<py::list>();
+      const int facet_mark = hf_description[2].cast<int>();
+
+      f = &Base_::facetlist[h];
+      Base_::init(f);
+
+      const int n_poly_per_hf = static_cast<int>(list_of_polygons.size());
+      f->numberofpolygons = n_poly_per_hf;
+      f->polygonlist = new Base_::polygon[n_poly_per_hf];
+
+      // 0
+      int i{}; // polygon counter
+      for (py::handle poly : list_of_polygons) {
+        p = &f->polygonlist[i];
+        Base_::init(p);
+        const int n_vertices_per_poly = static_cast<int>(poly.size());
+        p->numberofvertices = n_vertices_per_poly;
+        p->vertexlist = new int[n_vertices_per_poly];
+
+        // fill vertices
+        int j{};
+        for (py::handle vertex_id : poly) {
+          p->vertexlist[j] = vertex_id.cast<int>();
+          ++j;
+        }
+        ++i;
+      }
+
+      // 1
+      const int n_hf_holes = static_cast<int>(list_of_holes.size());
+      f->numberofholes = n_hf_holes;
+      f->holelist = new REAL[n_hf_holes * dim_];
+      i = 0;
+      for (py::handle hole : list_of_holes) {
+        // this needs to have len 3
+        int j{};
+        const auto hole_coord = hole.cast<py::list>();
+        if (hole_coord.size() != 3) {
+          PrintAndThrowError("h_facet holes must be 3D coordinates.",
+                             "Given hole has the size of (",
+                             hole_coord.size(),
+                             ")");
+        }
+        for (py::handle coord : hole) {
+          f->holelist[i * dim_ + j] = coord.cast<REAL>();
+          ++j;
+        }
+        ++i;
+      }
+
+      // 2
+      Base_::facetmarkerlist[h] = facet_mark;
+
+      // next h_facet
+      ++h;
     }
 
     /* numberofholes, holelist */
@@ -182,11 +244,11 @@ public:
 
   // output
   py::array_t<REAL> GetPoints() {
-    if (pointlist != (REAL *) NULL) {
+    if (pointlist != (REAL*) NULL) {
       py::array_t<REAL> points(Base_::numberofpoints * dim_);
       std::copy_n(Base_::pointlist,
-                Base_::numberofpoints * dim_,
-                static_cast<REAL*>(points.request().ptr));
+                  Base_::numberofpoints * dim_,
+                  static_cast<REAL*>(points.request().ptr));
       points.resize({Base_::numberofpoints, dim_});
       return points;
     }
@@ -195,9 +257,10 @@ public:
   }
 
   py::array_t<int> GetTetrahedrons() {
-    if (tetrahedronlist != (int *) NULL) {
+    if (tetrahedronlist != (int*) NULL) {
       // order 1 for now
-      py::array_t<int> tets(Base_::numberoftetrahedra * n_tetrahedron_vertices_order1_);
+      py::array_t<int> tets(Base_::numberoftetrahedra
+                            * n_tetrahedron_vertices_order1_);
       std::copy_n(Base_::tetrahedronlist,
                   Base_::numberoftetrahedra * n_tetrahedron_vertices_order1_,
                   static_cast<int*>(tets.request().ptr));
@@ -209,29 +272,29 @@ public:
   }
 };
 
-
 /// temporay direct return. will be wrapped to return dict
-inline void Tetrahedralize(std::string switches, PyTetgenIo& in, PyTetgenIo& out) {
-    char *c_switches = switches.data();
-    tetrahedralize(c_switches, &in, &out);
+inline void
+Tetrahedralize(std::string switches, PyTetgenIo& in, PyTetgenIo& out) {
+  char* c_switches = switches.data();
+  tetrahedralize(c_switches, &in, &out);
 }
-
 
 void add_pytetgenio_class(py::module_& m) {
 
   py::class_<PyTetgenIo> klasse(m, "tetgenio");
 
   klasse.def(py::init<>())
-       .def("setup", &PyTetgenIo::Setup,
-        py::arg("points"),
-        py::arg("facets"),
-        py::arg("facet_markers"),
-        py::arg("h_facets"),
-        py::arg("holes"),
-        py::arg("regions"),
-        py::arg("debug"))
-        .def("points", &PyTetgenIo::GetPoints)
-        .def("tets", &PyTetgenIo::GetTetrahedrons);
+      .def("setup",
+           &PyTetgenIo::Setup,
+           py::arg("points"),
+           py::arg("facets"),
+           py::arg("facet_markers"),
+           py::arg("h_facets"),
+           py::arg("holes"),
+           py::arg("regions"),
+           py::arg("debug"))
+      .def("points", &PyTetgenIo::GetPoints)
+      .def("tets", &PyTetgenIo::GetTetrahedrons);
 
   m.def("tetrahedralize", &Tetrahedralize);
 }
