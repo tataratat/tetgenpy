@@ -1,4 +1,7 @@
-set(TETGENPY_SRCS init/py_tetgenio.cpp tetgenpy_core.cpp)
+set(TETGENPY_SRCS
+        init/py_tetgenio.cpp
+        init/py_tetrahedralize.cpp
+        tetgenpy_core.cpp)
 
 # add target
 pybind11_add_module(tetgenpy_core ${TETGENPY_SRCS})

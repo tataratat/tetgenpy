@@ -196,13 +196,15 @@ public:
       for (py::handle poly : list_of_polygons) {
         p = &f->polygonlist[i];
         Base_::init(p);
-        const int n_vertices_per_poly = static_cast<int>(poly.size());
+        const auto poly_vertexlist = poly.cast<py::list>();
+        const int n_vertices_per_poly =
+            static_cast<int>(poly_vertexlist.size());
         p->numberofvertices = n_vertices_per_poly;
         p->vertexlist = new int[n_vertices_per_poly];
 
         // fill vertices
         int j{};
-        for (py::handle vertex_id : poly) {
+        for (py::handle vertex_id : poly_vertexlist) {
           p->vertexlist[j] = vertex_id.cast<int>();
           ++j;
         }
@@ -272,14 +274,7 @@ public:
   }
 };
 
-/// temporay direct return. will be wrapped to return dict
-inline void
-Tetrahedralize(std::string switches, PyTetgenIo& in, PyTetgenIo& out) {
-  char* c_switches = switches.data();
-  tetrahedralize(c_switches, &in, &out);
-}
-
-void add_pytetgenio_class(py::module_& m) {
+inline void add_pytetgenio_class(py::module_& m) {
 
   py::class_<PyTetgenIo> klasse(m, "tetgenio");
 
@@ -295,8 +290,6 @@ void add_pytetgenio_class(py::module_& m) {
            py::arg("debug"))
       .def("points", &PyTetgenIo::GetPoints)
       .def("tets", &PyTetgenIo::GetTetrahedrons);
-
-  m.def("tetrahedralize", &Tetrahedralize);
 }
 
 } // namespace tetgenpy
