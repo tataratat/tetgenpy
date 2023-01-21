@@ -2,8 +2,8 @@
 Class to prepare input Piecewise Linear Complexes for tetgen.
 """
 
-class PLC:
 
+class PLC:
     def __init__(self):
         self._points = []
         self._facets = []
