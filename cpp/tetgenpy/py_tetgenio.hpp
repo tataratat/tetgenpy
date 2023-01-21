@@ -61,6 +61,13 @@ public:
   static const int n_facet_constraint_entries_{2};
   static const int n_segment_constraint_entries_{3};
   static const int n_triface_corners_{3};
+  static const int n_tet_neighbors_{4};
+  static const int n_faces_per_tet_{4};
+  static const int n_edges_per_tet_{6};
+  static const int n_tet_neighbors_per_face_{2}; // -1 entry for outer face
+  static const int n_edges_per_face_{3};
+  static const int n_edge_corners_{2};
+  static const int n_tet_per_edge_{1};
 
   // out flag after tetrahedralize
   bool is_output_ = false;
@@ -304,98 +311,129 @@ public:
 
   /* getters */
   template<typename DataType>
-  py::array_t<DataType> CopyFromBase(const int& base_data_size,
-                                     const int& base_array_size,
+  py::array_t<DataType> CopyFromBase(const int base_data_count,
+                                     const int base_data_stride,
                                      const DataType* base_array_ptr,
-                                     std::vector<int> output_array_size) {
+                                     std::vector<int> output_array_size = {}) {
 
     // return if zero
-    if (base_data_size == 0) {
+    if (base_data_count == 0 || base_array_ptr == (DataType*) NULL) {
       py::array_t<DataType>(0);
     }
 
-    py::array_t<DataType> output_array(base_array_size);
+    const int base_array_len = base_data_count * base_data_stride;
+    py::array_t<DataType> output_array(base_array_len);
     std::copy_n(base_array_ptr,
-                base_array_size,
+                base_array_len,
                 static_cast<DataType*>(output_array.request().ptr));
-    output_array.resize(output_array_size);
+
+    // resize output if size input satisfies one of the following
+    if (output_array_size.size() != 0 && output_array_size[0] > 0) {
+      // 1. specified entries with first entries positive -> direct use
+      output_array.resize(output_array_size);
+    } else if (output_array_size.size() == 0) {
+      // 2. nothing specified -> try to resize based on count and size
+      output_array.resize({base_data_count, base_data_stride})
+    }
     return output_array;
   }
 
   // I / O
   py::array_t<REAL> GetPoints() {
-    return CopyFromBase(Base_::numberofpoints,
-                        Base_::numberofpoints * dim_,
-                        Base_::pointlist,
-                        {Base_::numberofpoints, dim_});
+    return CopyFromBase(Base_::numberofpoints, dim_, Base_::pointlist);
   }
 
   // I - only for refinement / O
   py::array_t<int> GetTetrahedra() {
-    if (Base_::numberoftetrahedra == 0) {
-      // no tets
-      return py::array_t<int>(0);
-    }
-    const int tet_arrsize = Base_::numberoftetrahedra * Base_::numberofcorners;
-    py::array_t<int> tets(tet_arrsize);
-    std::copy_n(Base_::tetrahedronlist,
-                tet_arrsize,
-                static_cast<int*>(tets.request().ptr));
-    tets.resize({Base_::numberoftetrahedra, Base_::numberofcorners});
-    return tets;
+    return CopyFromBase(Base_::numberoftetrahedra,
+                        Base_::numberofcorners,
+                        Base_::tetrahedronlist);
   }
 
   // I - for refinement / O
   py::array_t<int> GetTriFaces() {
-    if (Base_::numberoftrifaces == 0) {
-      return py::array_t<int>(0);
-    }
-    const int tri_arrsize = Base_::numberoftrifaces * n_triface_corners_;
-    py::array_t<int> tri(tri_arrsize);
-    std::copy_n(Base_::trifacelist,
-                tri_arrsize,
-                static_cast<int*>(tri.request().ptr));
-    tri.resize({Base_::numberoftrifaces, n_triface_corners_});
-    return tri;
+    return CopyFromBase(Base_::numberoftrifaces,
+                        n_triface_corners_,
+                        Base_::trifacelist);
   }
 
-  py::array_t<int> GetTriFaceMarkers() { return py::array_t<int>(0); }
+  py::array_t<int> GetTriFaceMarkers() {
+    return CopyFromBase(Base_::numberoftrifaces, 1, Base_::trifacemarkerlist);
+  }
 
-  py::array_t<int> GetNeighbors() {}
+  py::array_t<int> GetNeighbors() {
+    return CopyFromBase(Base_::numberoftetrahedra,
+                        n_tet_neighbors_,
+                        Base_::neighborlist);
+  }
 
-  py::array_t<int> GetTet2Faces() { return py::array_t<int>(0); }
+  py::array_t<int> GetTet2Faces() {
+    return CopyFromBase(Base_::numberoftetrahedra, n_faces_per_tet_;
+                        Base_::tet2facelist);
+  }
 
-  py::array_t<int> GetTet2Edges() { return py::array_t<int>(0); }
+  py::array_t<int> GetTet2Edges() {
+    return CopyFromBase(Base_::numberoftetrahedra, n_edges_per_tet_;
+                        Base_::tet2edgelist);
+  }
 
-  py::array_t<int> GetFace2Tets() { return py::array_t<int>(0); }
+  py::array_t<int> GetFace2Tets() {
+    return CopyFromBase(Base_::numberoftrifaces,
+                        n_tet_neighbors_per_face_,
+                        Base_::face2tetlist);
+  }
 
-  py::array_t<int> GetFace2Edges() { return py::array_t<int>(0); }
+  py::array_t<int> GetFace2Edges() {
+    return CopyFromBase(Base_::numberoftrifaces,
+                        n_edges_per_face_,
+                        Base_::face2edgelist);
+  }
 
-  py::array_t<int> GetEdges() { return py::array_t<int>(0); }
+  py::array_t<int> GetEdges() {
+    return CopyFromBase(Base_::numberofedges, n_edge_corners_, Base_::edgelist);
+  }
 
-  py::array_t<int> GetEdgeMarkers() { return py::array_t<int>(0); }
+  py::array_t<int> GetEdgeMarkers() {
+    return CopyFromBase(Base_::numberofedges, 1, Base_::edgemarkerlist);
+  }
 
-  py::array_t<int> GetEdge2Tets() { return py::array_t<int>(0); }
+  py::array_t<int> GetEdge2Tets() {
+    return CopyFromBase(Base_::numberofedges,
+                        n_tet_per_edge_,
+                        Base_::edge2tetlist);
+  }
 
-  py::array_t<int> GetVornoiCells() { return py::array_t<int> }
-};
+  // Voronoi point, edges, facets, cells.
+  py::dict GetVornoiCells() {
+    //
+    py::dict voronoi;
 
-inline void add_pytetgenio_class(py::module_& m) {
+    // points are simple copy
+    py::dict["points"] =
+        CopyFromBase(Base_::numberofvpoints, dim_, Base_::vpointlist);
 
-  py::class_<PyTetgenIo> klasse(m, "tetgenio");
+    // edges
+    // facets
+    // cells
+    return voronoi;
+  };
 
-  klasse.def(py::init<>())
-      .def("setup",
-           &PyTetgenIo::Setup,
-           py::arg("points"),
-           py::arg("facets"),
-           py::arg("facet_markers"),
-           py::arg("h_facets"),
-           py::arg("holes"),
-           py::arg("regions"),
-           py::arg("debug"))
-      .def("points", &PyTetgenIo::GetPoints)
-      .def("tets", &PyTetgenIo::GetTetrahedra);
-}
+  inline void add_pytetgenio_class(py::module_& m) {
+
+    py::class_<PyTetgenIo> klasse(m, "tetgenio");
+
+    klasse.def(py::init<>())
+        .def("setup",
+             &PyTetgenIo::Setup,
+             py::arg("points"),
+             py::arg("facets"),
+             py::arg("facet_markers"),
+             py::arg("h_facets"),
+             py::arg("holes"),
+             py::arg("regions"),
+             py::arg("debug"))
+        .def("points", &PyTetgenIo::GetPoints)
+        .def("tets", &PyTetgenIo::GetTetrahedra);
+  }
 
 } // namespace tetgenpy
