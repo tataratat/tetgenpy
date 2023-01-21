@@ -58,8 +58,12 @@ public:
   // define constants
   static const int dim_{3};
   static const int n_region_entries_{5};
-  static const int n_tetrahedron_vertices_order1_{4};
-  static const int n_tetrahedron_vertices_order2_{10};
+  static const int n_facet_constraint_entries_{2};
+  static const int n_segment_constraint_entries_{3};
+  static const int n_triface_corners_{3};
+
+  // out flag after tetrahedralize
+  bool is_output_ = false;
 
   // default ctor initializes. dtor clears.
   PyTetgenIo() { Base_::initialize(); }
@@ -91,6 +95,8 @@ public:
              py::list h_facets,
              py::array_t<REAL> holes,
              py::array_t<REAL> regions,
+             py::array_t<REAL> facet_constraints,
+             py::array_t<REAL> segment_constraints,
              bool debug = false) {
 
     PrintDebug(debug, "Starting PyTetgenIo::Load");
@@ -241,60 +247,137 @@ public:
     }
 
     /* numberofholes, holelist */
-    const int n_holes = static_cast<int>(holes.size());
-    if (n_holes > 0) {
-      // shape check
-      CheckPyArrayShape(holes, {-1, dim_});
+    const int holes_size = static_cast<int>(holes.size());
+    if (holes_size > 0) {
+      PrintDebug(debug, "setting holes.")
+          // shape check
+          CheckPyArrayShape(holes, {-1, dim_});
 
-      Base_::numberofholes = n_holes;
-      Base_::holelist = new REAL[n_holes * dim_];
+      Base_::numberofholes = holes_size / dim_;
+      Base_::holelist = new REAL[holes_size];
       std::copy_n(static_cast<REAL*>(holes.request().ptr),
-                  n_holes * dim_,
+                  holes_size,
                   Base_::holelist);
     }
 
     /* numberofregions, regionlist */
-    const int n_regions = static_cast<int>(regions.size());
-    if (n_regions > 0) {
-      // shape check
-      CheckPyArrayShape(regions, {-1, n_region_entries_});
+    const int regions_size = static_cast<int>(regions.size());
+    if (regions_size > 0) {
+      PrintDebug(debug, "setting regions.")
+          // shape check
+          CheckPyArrayShape(regions, {-1, n_region_entries_});
 
-      Base_::numberofregions = n_regions;
-      Base_::regionlist = new REAL[n_regions * n_region_entries_];
+      Base_::numberofregions = regions_size / n_region_entries_;
+      Base_::regionlist = new REAL[regions_size];
       std::copy_n(static_cast<REAL*>(regions.request().ptr),
-                  n_regions * n_region_entries_,
+                  regions_size,
                   Base_::regionlist);
     }
+
+    /* numberoffacetconstraints, facetconstaintlist */
+    const int f_constraints_size = static_cast<int>(facet_constriants.size());
+    if (f_constraints_size > 0) {
+      CheckPyArrayShape(facet_constraints, {-1, n_facet_contraint_entries_});
+
+      Base_::numberoffacetconstraints =
+          f_constraints_size / n_facet_constraint_entries_;
+      Base_::facetconstraintlist = new REAL[f_constraints_size];
+      std::copy_n(static_cast<REAL*>(facet_constraints.request().ptr),
+                  f_constraints_size,
+                  Base_::facetconstraintlist);
+    }
+
+    /* numberofsegmentconstraints, segmentconstraintlist */
+    const int s_constraints_size = static_cast<int>(segment_constraints.size());
+    if (s_constraints_size > 0) {
+      CheckPyArrayShape(segment_constraints,
+                        {-1, n_segment_contraint_entries_});
+
+      Base_::numberofsegmentconstraints =
+          s_constraints_size / n_segment_constraint_entries_;
+      Base_::segmentconstraintlist = new REAL[s_constraints_size];
+      std::copy_n(static_cast<REAL*>(segment_constraints.request().ptr),
+                  s_constraints_size,
+                  Base_::segmentconstraintlist);
+    }
   }
 
-  // output
+  /* getters */
+  template<typename DataType>
+  py::array_t<DataType> CopyFromBase(const int& base_data_size,
+                                     const int& base_array_size,
+                                     const DataType* base_array_ptr,
+                                     std::vector<int> output_array_size) {
+
+    // return if zero
+    if (base_data_size == 0) {
+      py::array_t<DataType>(0);
+    }
+
+    py::array_t<DataType> output_array(base_array_size);
+    std::copy_n(base_array_ptr,
+                base_array_size,
+                static_cast<DataType*>(output_array.request().ptr));
+    output_array.resize(output_array_size);
+    return output_array;
+  }
+
+  // I / O
   py::array_t<REAL> GetPoints() {
-    if (pointlist != (REAL*) NULL) {
-      py::array_t<REAL> points(Base_::numberofpoints * dim_);
-      std::copy_n(Base_::pointlist,
-                  Base_::numberofpoints * dim_,
-                  static_cast<REAL*>(points.request().ptr));
-      points.resize({Base_::numberofpoints, dim_});
-      return points;
-    }
-    // no points
-    return py::array_t<REAL>(0);
+    return CopyFromBase(Base_::numberofpoints,
+                        Base_::numberofpoints * dim_,
+                        Base_::pointlist,
+                        {Base_::numberofpoints, dim_});
   }
 
-  py::array_t<int> GetTetrahedrons() {
-    if (tetrahedronlist != (int*) NULL) {
-      // order 1 for now
-      py::array_t<int> tets(Base_::numberoftetrahedra
-                            * n_tetrahedron_vertices_order1_);
-      std::copy_n(Base_::tetrahedronlist,
-                  Base_::numberoftetrahedra * n_tetrahedron_vertices_order1_,
-                  static_cast<int*>(tets.request().ptr));
-      tets.resize({Base_::numberoftetrahedra, n_tetrahedron_vertices_order1_});
-      return tets;
+  // I - only for refinement / O
+  py::array_t<int> GetTetrahedra() {
+    if (Base_::numberoftetrahedra == 0) {
+      // no tets
+      return py::array_t<int>(0);
     }
-    // no tets
-    return py::array_t<int>(0);
+    const int tet_arrsize = Base_::numberoftetrahedra * Base_::numberofcorners;
+    py::array_t<int> tets(tet_arrsize);
+    std::copy_n(Base_::tetrahedronlist,
+                tet_arrsize,
+                static_cast<int*>(tets.request().ptr));
+    tets.resize({Base_::numberoftetrahedra, Base_::numberofcorners});
+    return tets;
   }
+
+  // I - for refinement / O
+  py::array_t<int> GetTriFaces() {
+    if (Base_::numberoftrifaces == 0) {
+      return py::array_t<int>(0);
+    }
+    const int tri_arrsize = Base_::numberoftrifaces * n_triface_corners_;
+    py::array_t<int> tri(tri_arrsize);
+    std::copy_n(Base_::trifacelist,
+                tri_arrsize,
+                static_cast<int*>(tri.request().ptr));
+    tri.resize({Base_::numberoftrifaces, n_triface_corners_});
+    return tri;
+  }
+
+  py::array_t<int> GetTriFaceMarkers() { return py::array_t<int>(0); }
+
+  py::array_t<int> GetNeighbors() {}
+
+  py::array_t<int> GetTet2Faces() { return py::array_t<int>(0); }
+
+  py::array_t<int> GetTet2Edges() { return py::array_t<int>(0); }
+
+  py::array_t<int> GetFace2Tets() { return py::array_t<int>(0); }
+
+  py::array_t<int> GetFace2Edges() { return py::array_t<int>(0); }
+
+  py::array_t<int> GetEdges() { return py::array_t<int>(0); }
+
+  py::array_t<int> GetEdgeMarkers() { return py::array_t<int>(0); }
+
+  py::array_t<int> GetEdge2Tets() { return py::array_t<int>(0); }
+
+  py::array_t<int> GetVornoiCells() { return py::array_t<int> }
 };
 
 inline void add_pytetgenio_class(py::module_& m) {
@@ -312,7 +395,7 @@ inline void add_pytetgenio_class(py::module_& m) {
            py::arg("regions"),
            py::arg("debug"))
       .def("points", &PyTetgenIo::GetPoints)
-      .def("tets", &PyTetgenIo::GetTetrahedrons);
+      .def("tets", &PyTetgenIo::GetTetrahedra);
 }
 
 } // namespace tetgenpy
