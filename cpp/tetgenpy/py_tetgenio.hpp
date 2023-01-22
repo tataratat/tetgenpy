@@ -68,6 +68,8 @@ public:
   static const int n_edges_per_face_{3};
   static const int n_edge_corners_{2};
   static const int n_tet_per_edge_{1};
+  static const int n_voroedge_corners_{2};
+  static const int n_cell_neighbors_per_vorofacet_{2};
 
   // out flag after tetrahedralize
   bool is_output_ = false;
@@ -256,7 +258,7 @@ public:
     /* numberofholes, holelist */
     const int holes_size = static_cast<int>(holes.size());
     if (holes_size > 0) {
-      PrintDebug(debug, "setting holes.")
+      PrintDebug(debug, "setting holes.");
           // shape check
           CheckPyArrayShape(holes, {-1, dim_});
 
@@ -270,7 +272,7 @@ public:
     /* numberofregions, regionlist */
     const int regions_size = static_cast<int>(regions.size());
     if (regions_size > 0) {
-      PrintDebug(debug, "setting regions.")
+      PrintDebug(debug, "setting regions.");
           // shape check
           CheckPyArrayShape(regions, {-1, n_region_entries_});
 
@@ -282,9 +284,9 @@ public:
     }
 
     /* numberoffacetconstraints, facetconstaintlist */
-    const int f_constraints_size = static_cast<int>(facet_constriants.size());
+    const int f_constraints_size = static_cast<int>(facet_constraints.size());
     if (f_constraints_size > 0) {
-      CheckPyArrayShape(facet_constraints, {-1, n_facet_contraint_entries_});
+      CheckPyArrayShape(facet_constraints, {-1, n_facet_constraint_entries_});
 
       Base_::numberoffacetconstraints =
           f_constraints_size / n_facet_constraint_entries_;
@@ -298,7 +300,7 @@ public:
     const int s_constraints_size = static_cast<int>(segment_constraints.size());
     if (s_constraints_size > 0) {
       CheckPyArrayShape(segment_constraints,
-                        {-1, n_segment_contraint_entries_});
+                        {-1, n_segment_constraint_entries_});
 
       Base_::numberofsegmentconstraints =
           s_constraints_size / n_segment_constraint_entries_;
@@ -333,7 +335,7 @@ public:
       output_array.resize(output_array_size);
     } else if (output_array_size.size() == 0) {
       // 2. nothing specified -> try to resize based on count and size
-      output_array.resize({base_data_count, base_data_stride})
+      output_array.resize({base_data_count, base_data_stride});
     }
     return output_array;
   }
@@ -368,12 +370,12 @@ public:
   }
 
   py::array_t<int> GetTet2Faces() {
-    return CopyFromBase(Base_::numberoftetrahedra, n_faces_per_tet_;
+    return CopyFromBase(Base_::numberoftetrahedra, n_faces_per_tet_,
                         Base_::tet2facelist);
   }
 
   py::array_t<int> GetTet2Edges() {
-    return CopyFromBase(Base_::numberoftetrahedra, n_edges_per_tet_;
+    return CopyFromBase(Base_::numberoftetrahedra, n_edges_per_tet_,
                         Base_::tet2edgelist);
   }
 
@@ -409,14 +411,89 @@ public:
     py::dict voronoi;
 
     // points are simple copy
-    py::dict["points"] =
+    voronoi["points"] =
         CopyFromBase(Base_::numberofvpoints, dim_, Base_::vpointlist);
 
-    // edges
+    // vornoi edges
+    py::array_t<int> vedges(Base_::numberofvedges * n_voroedge_corners_);
+    int* vedges_ptr = static_cast<int*>(vedges.request().ptr);
+
+    // infinite vertex is not defined.
+    // however for plotting, one could project this to a certain plane.
+    // to make that process a bit easier, followings are provided:
+    // 1. reference to infinite vertex is assigned with negative value
+    //    and it counts down at every occurance. that way, we can just
+    //    append new points to existing point array.
+    // 2. keep track of edge ids with infinite vertex
+    // 3. and their normals
+    int infinite_vertex_id{-1}; //
+    py::list edges_with_infinite_vertex;
+    py::list ray_directions;
+    for (int i{}; i < Base_::numberofvedges; ++i) {
+      const auto& base_voroedge = Base_::vedgelist[i];
+
+      const int ve_id = i * n_voroedge_corners_;
+      vedges_ptr[ve_id] = base_voroedge.v1;
+
+      const auto& v2 = base_voroedge.v2;
+      if (v2 < 0) { // negative -> "infinite vertex"
+        vedges_ptr[ve_id + 1] = infinite_vertex_id; // <- (1)
+        --infinite_vertex_id;
+
+        edges_with_infinite_vertex.append(i); // <- (2)
+
+        py::list normal(3);
+        normal[0] = base_voroedge.vnormal[0];
+        normal[1] = base_voroedge.vnormal[1];
+        normal[2] = base_voroedge.vnormal[2];
+        ray_directions.append(normal); // <- 3
+      } else {
+        vedges_ptr[ve_id + 1] = v2;
+      }
+    }
+    voronoi["edges"] = vedges;
+    voronoi["edges_with_infinite_vertex"] =
+        py::make_tuple(edges_with_infinite_vertex, ray_directions);
+
     // facets
+    // Base_::vorofacet includes cell neighbors too
+    py::array_t<int> facet2cell(
+        {Base_::numberofvfacets, n_cell_neighbors_per_vorofacet_});
+    py::list facets;
+    int* f2c_ptr = static_cast<int*>(facet2cell.request().ptr);
+    for (int i{}; i < Base_::numberofvfacets; ++i) {
+      const auto& v_facet = Base_::vfacetlist[i];
+      const int f2c_id = i * n_cell_neighbors_per_vorofacet_;
+      f2c_ptr[f2c_id] = v_facet.c1;
+      f2c_ptr[f2c_id + 1] = v_facet.c2;
+
+      py::list facet;
+      // "... elist[0] saves the number of Voronoi edges ..."
+      for (int j{1}; j < v_facet.elist[0] + 1; ++j) {
+        facet.append(v_facet.elist[j]);
+      }
+      facets.append(facet);
+    }
+    voronoi["facet2cell"] = facet2cell;
+    voronoi["facets"] = facets;
+
     // cells
+    py::list cells;
+    for (int i{}; i < Base_::numberofvcells; ++i) {
+      const auto& v_cell = Base_::vcelllist[i];
+      const auto& n_facets = v_cell[0];
+      py::list cell;
+      for (int j{1}; j < v_cell[0] + 1; ++j) {
+        cell.append(v_cell[j]);
+      }
+      cells.append(cell);
+    }
+    voronoi["cells"] = cells;
+
     return voronoi;
-  };
+  }
+};
+
 
   inline void add_pytetgenio_class(py::module_& m) {
 
@@ -431,6 +508,8 @@ public:
              py::arg("h_facets"),
              py::arg("holes"),
              py::arg("regions"),
+             py::arg("facet_constraints"),
+             py::arg("segment_constraints"),
              py::arg("debug"))
         .def("points", &PyTetgenIo::GetPoints)
         .def("tets", &PyTetgenIo::GetTetrahedra);
