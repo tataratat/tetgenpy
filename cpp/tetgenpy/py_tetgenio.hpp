@@ -292,7 +292,7 @@ public:
           f_constraints_size / n_facet_constraint_entries_;
       Base_::facetconstraintlist = new REAL[f_constraints_size];
       std::copy_n(static_cast<REAL*>(facet_constraints.request().ptr),
-                  f_constraints_size,
+                  f_constraints_size * n_facet_constraint_entries_,
                   Base_::facetconstraintlist);
     }
 
@@ -306,7 +306,7 @@ public:
           s_constraints_size / n_segment_constraint_entries_;
       Base_::segmentconstraintlist = new REAL[s_constraints_size];
       std::copy_n(static_cast<REAL*>(segment_constraints.request().ptr),
-                  s_constraints_size,
+                  s_constraints_size * n_segment_constraint_entries_,
                   Base_::segmentconstraintlist);
     }
   }
