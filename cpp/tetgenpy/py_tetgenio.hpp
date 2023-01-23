@@ -259,8 +259,8 @@ public:
     const int holes_size = static_cast<int>(holes.size());
     if (holes_size > 0) {
       PrintDebug(debug, "setting holes.");
-          // shape check
-          CheckPyArrayShape(holes, {-1, dim_});
+      // shape check
+      CheckPyArrayShape(holes, {-1, dim_});
 
       Base_::numberofholes = holes_size / dim_;
       Base_::holelist = new REAL[holes_size];
@@ -273,8 +273,8 @@ public:
     const int regions_size = static_cast<int>(regions.size());
     if (regions_size > 0) {
       PrintDebug(debug, "setting regions.");
-          // shape check
-          CheckPyArrayShape(regions, {-1, n_region_entries_});
+      // shape check
+      CheckPyArrayShape(regions, {-1, n_region_entries_});
 
       Base_::numberofregions = regions_size / n_region_entries_;
       Base_::regionlist = new REAL[regions_size];
@@ -370,12 +370,14 @@ public:
   }
 
   py::array_t<int> GetTet2Faces() {
-    return CopyFromBase(Base_::numberoftetrahedra, n_faces_per_tet_,
+    return CopyFromBase(Base_::numberoftetrahedra,
+                        n_faces_per_tet_,
                         Base_::tet2facelist);
   }
 
   py::array_t<int> GetTet2Edges() {
-    return CopyFromBase(Base_::numberoftetrahedra, n_edges_per_tet_,
+    return CopyFromBase(Base_::numberoftetrahedra,
+                        n_edges_per_tet_,
                         Base_::tet2edgelist);
   }
 
@@ -494,25 +496,24 @@ public:
   }
 };
 
+inline void add_pytetgenio_class(py::module_& m) {
 
-  inline void add_pytetgenio_class(py::module_& m) {
+  py::class_<PyTetgenIo> klasse(m, "tetgenio");
 
-    py::class_<PyTetgenIo> klasse(m, "tetgenio");
-
-    klasse.def(py::init<>())
-        .def("setup",
-             &PyTetgenIo::Setup,
-             py::arg("points"),
-             py::arg("facets"),
-             py::arg("facet_markers"),
-             py::arg("h_facets"),
-             py::arg("holes"),
-             py::arg("regions"),
-             py::arg("facet_constraints"),
-             py::arg("segment_constraints"),
-             py::arg("debug"))
-        .def("points", &PyTetgenIo::GetPoints)
-        .def("tets", &PyTetgenIo::GetTetrahedra);
-  }
+  klasse.def(py::init<>())
+      .def("setup",
+           &PyTetgenIo::Setup,
+           py::arg("points"),
+           py::arg("facets"),
+           py::arg("facet_markers"),
+           py::arg("h_facets"),
+           py::arg("holes"),
+           py::arg("regions"),
+           py::arg("facet_constraints"),
+           py::arg("segment_constraints"),
+           py::arg("debug"))
+      .def("points", &PyTetgenIo::GetPoints)
+      .def("tets", &PyTetgenIo::GetTetrahedra);
+}
 
 } // namespace tetgenpy
