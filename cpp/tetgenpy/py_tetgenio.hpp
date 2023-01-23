@@ -408,7 +408,7 @@ public:
   }
 
   // Voronoi point, edges, facets, cells.
-  py::dict GetVornoiCells() {
+  py::dict GetVoronoi() {
     //
     py::dict voronoi;
 
@@ -498,7 +498,7 @@ public:
 
 inline void add_pytetgenio_class(py::module_& m) {
 
-  py::class_<PyTetgenIo> klasse(m, "tetgenio");
+  py::class_<PyTetgenIo> klasse(m, "TetgenIO");
 
   klasse.def(py::init<>())
       .def("setup",
@@ -513,7 +513,18 @@ inline void add_pytetgenio_class(py::module_& m) {
            py::arg("segment_constraints"),
            py::arg("debug"))
       .def("points", &PyTetgenIo::GetPoints)
-      .def("tets", &PyTetgenIo::GetTetrahedra);
+      .def("tetrahedra", &PyTetgenIo::GetTetrahedra)
+      .def("trifaces", &PyTetgenIo::GetTriFaces)
+      .def("trifacemarkers", &PyTetgenIo::GetTriFaceMarkers)
+      .def("neighbors", &PyTetgenIo::GetNeighbors)
+      .def("tet2faces", &PyTetgenIo::GetTet2Faces)
+      .def("tet2edges", &PyTetgenIo::GetTet2Edges)
+      .def("face2tets", &PyTetgenIo::GetFace2Tets)
+      .def("face2edges", &PyTetgenIo::GetFace2Edges)
+      .def("edges", &PyTetgenIo::GetEdges)
+      .def("edgemarkers", &PyTetgenIo::GetEdgeMarkers)
+      .def("edge2tets", &PyTetgenIo::GetEdge2Tets)
+      .def("voronoi", &PyTetgenIo::GetVoronoi);
 }
 
 } // namespace tetgenpy
