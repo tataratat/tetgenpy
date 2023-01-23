@@ -135,7 +135,7 @@ class PLC:
         # holes
         if holes is not None:
             holes = np.asanyarray(holes)
-            _check_2d_and_shape1("facet holes", holes)
+            _check_2d_and_shape1("facet holes", holes, 3)
             facet_with_holes.append(holes)
         else:
             # empty hole
@@ -147,10 +147,43 @@ class PLC:
         self._facet_with_holes.append(facet_with_holes)
 
     def add_holes(self, holes):
-        pass
+        """
+        Adds locations to poke holes. This hole propagates to the nearest
+        edges of surrounding facets.
+
+        Parameters
+        ----------
+        holes: (n, 3) array-like
+          places to poke holes
+
+        Returns
+        -------
+        None
+        """
+        holes = np.asanyarray(holes)
+        _check_2d_and_shape1("holes", holes, 3)
+
+        self._holes.append(holes)
 
     def add_regions(self, regions):
-        pass
+        """
+        Mark regions, their attributes, and their maximum volumes.
+        Each region has 5 entries - x,y,z coordinate, (int) attribute, (float)
+        maximum tetrahedron volume for this region.
+
+        Parameters
+        ----------
+        regions: (n, 5) np.ndarray
+          [[x1, y1, z1, attribute, max_volume], ...]
+
+        Returns
+        -------
+        None
+        """
+        regions = np.asanyarray(regions)
+        _check_2d_and_shape1("regions", regions, 5)
+
+        self._regions.append(regions)
 
     def sofarsogood(self):
         """assert for sanity check"""
