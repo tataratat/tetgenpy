@@ -20,6 +20,8 @@ class PLC:
         self._holes = []
         self._regions = []
         self._facet_markers = []
+        self._facet_constraints = []
+        self._facet_with_holes_constraints = []
 
         # self._point_id_offset = 0
         self._facet_id_offset = 0
@@ -78,7 +80,9 @@ class PLC:
 
         return polygons
 
-    def add_facets(self, polygons, facet_id=-1, coordinates=None):
+    def add_facets(
+        self, polygons, facet_id=-1, facet_constraints=None, coordinates=None
+    ):
         """
         Adds facets with one polygon per facet.
 
@@ -92,6 +96,9 @@ class PLC:
           value used to set facetmarker.
           can be also interpreted as boundary id as all the output faces on
           this facet will have this id.
+        facet_constraints: float or list
+          max area for given facets. If it is list,
+          len(facet_constraints) == len(polygons) should hold.
         coordinates: bool
           Default is None. Can specify if given polygons are coordinate or
           index based. If None, will check the first entry and determine.
@@ -102,13 +109,46 @@ class PLC:
         """
         # make sure polygons are list of list referring to points
         processed_polygon_ids = self._process_polygons(polygons, coordinates)
+        n_polygons = len(processed_polygon_ids)
 
         # by now, we should have points and ids.
         self._facets.extend(processed_polygon_ids)
-        self._facet_markers.extend([facet_id] * len(polygons))
+        self._facet_markers.extend([facet_id] * n_polygons)
+        self._facet_id_offset += n_polygons
+
+        if facet_constraints is not None:
+            if isinstance(facet_constraints, (tuple, list, np.ndarray)):
+                f_constraints = np.asanyarray(facet_constraints).reshape(-1, 2)
+                # same length check
+                if len(f_constraints) != n_polygons:
+                    raise ValueError(
+                        "multiple facet constrains should have same len as "
+                        f"polygons. polygons-({n_polygons}) / "
+                        f"facet_constraints-({len(facet_constraints)})."
+                    )
+
+            elif isinstance(facet_constraints, (int, float)):
+                f_constraints = np.empty((n_polygons, 2), dtype=np.float64)
+                f_constraints[:, 0] = np.arange(
+                    self._facet_id_offset - n_polygons, self._facet_id_offset
+                )
+                f_constraints[:, 1] = facet_constraints
+
+            else:
+                raise TypeError(
+                    "facet_constraints should be array-like or float. "
+                    f"Given {type(facet_constraints)}"
+                )
+
+            self._facet_constraints.append(f_constraints)
 
     def add_facet_with_holes(
-        self, polygons, holes, facet_id=-1, coordinates=None
+        self,
+        polygons,
+        holes,
+        facet_id=-1,
+        coordinates=None,
+        facet_constraint=None,
     ):
         """
         Supports full features of tetgenio::facet.
@@ -145,6 +185,15 @@ class PLC:
         facet_with_holes.append(int(facet_id))
 
         self._facet_with_holes.append(facet_with_holes)
+
+        # optional facet constraint
+        if facet_constraint is not None:
+            if not isinstance(facet_constraint, (int, float)):
+                raise TypeError("facet_constraint should be float.")
+
+            self._facet_with_holes_constraints.append(
+                [len(self._facet_with_holes) - 1, facet_constraint]
+            )
 
     def add_holes(self, holes):
         """
@@ -192,8 +241,25 @@ class PLC:
         assert self.points.ndim == 2
         assert self.points.shape[1] == 3
 
-    def to_tetgenio(self):
-        pass
+    def to_tetgenio(self, as_dict=False):
+        """ """
+        pytetio = dict()
+        pytetio["points"] = np.vstack(self._points, dtype=np.float64)
+        pytetio["facets"] = self._facets
+        pytetio["facet_markers"] = self._facet_markers
+        pytetio["h_facets"] = self._facet_with_holes
+        pytetio["holes"] = np.vstack(self._holes, dtype=np.float64)
+
+        # combind facet and h_facet constraints
+        # apply offset now.
+        hf_constraints = np.asanyarray(
+            self._facet_with_holes_constraints, dtype=np.float64
+        ) + [len(self._facets), 0]
+        f_constraints = np.vstack((self._facet_constraints, hf_constraints))
+        pytetio["facet_constraints"] = f_constraints
+        pytetio["segment_constraints"] = np.vstack(
+            self._segment_constraints, dtype=np.float64
+        )
 
     def show(self):
         pass
