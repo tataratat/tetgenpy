@@ -300,6 +300,9 @@ class PLC:
         if debug:
             pytetio["debug"] = debug
 
+        if as_dict:
+            return pytetio
+
         tetio = core.TetgenIO()
         tetio.setup(**pytetio)
 
