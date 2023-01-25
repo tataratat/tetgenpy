@@ -3,6 +3,8 @@ Class to prepare input Piecewise Linear Complexes for tetgen.
 """
 import numpy as np
 
+from tetgenpy import core
+
 
 def _check_2d_and_shape1(name, array, shape1):
     shape = array.shape
@@ -22,6 +24,7 @@ class PLC:
         self._facet_markers = []
         self._facet_constraints = []
         self._facet_with_holes_constraints = []
+        self._segment_constraints = []
 
         # self._point_id_offset = 0
         self._facet_id_offset = 0
@@ -66,7 +69,7 @@ class PLC:
         if coordinates:
             point_id_offset = len(self._points)
             id_based_polygons = []
-            for i, coords in polygons:
+            for coords in polygons:
                 # add_points will check for valid input
                 self.add_points(coords)
 
@@ -74,6 +77,8 @@ class PLC:
                 id_based_polygons.append(
                     list(range(point_id_offset, point_id_offset + len(coords)))
                 )
+
+                point_id_offset += len(coords)
 
             # at this point, we overwrite polygons
             polygons = id_based_polygons
@@ -241,25 +246,64 @@ class PLC:
         assert self.points.ndim == 2
         assert self.points.shape[1] == 3
 
-    def to_tetgenio(self, as_dict=False):
-        """ """
-        pytetio = dict()
-        pytetio["points"] = np.vstack(self._points, dtype=np.float64)
-        pytetio["facets"] = self._facets
-        pytetio["facet_markers"] = self._facet_markers
-        pytetio["h_facets"] = self._facet_with_holes
-        pytetio["holes"] = np.vstack(self._holes, dtype=np.float64)
+    def to_tetgenio(self, as_dict=False, debug=False):
+        """
+        Creates tetgenio based on current properties.
 
-        # combind facet and h_facet constraints
+        Parameters
+        ----------
+        as_dict: bool
+          return dict instead of TetgenIO object
+        debug: bool
+          prints debug messages from cpp side.
+        """
+        # init all required kwargs
+        # set required ones or ones that doesn't need further processing
+        pytetio = {
+            "points": np.vstack(self._points),
+            "facets": self._facets,
+            "facet_markers": self._facet_markers,
+            "h_facets": self._facet_with_holes,
+            "holes": [],
+            "regions": [],
+            "facet_constraints": [],
+            "segment_constraints": [],
+            "debug": False,
+        }
+
+        if self._holes:
+            pytetio["holes"] = np.vstack(self._holes)
+
+        if self._regions:
+            pytetio["regions"] = np.vstack(self._regions)
+
+        # combine facet and h_facet constraints
         # apply offset now.
-        hf_constraints = np.asanyarray(
-            self._facet_with_holes_constraints, dtype=np.float64
-        ) + [len(self._facets), 0]
-        f_constraints = np.vstack((self._facet_constraints, hf_constraints))
-        pytetio["facet_constraints"] = f_constraints
-        pytetio["segment_constraints"] = np.vstack(
-            self._segment_constraints, dtype=np.float64
-        )
+        to_stack = []
+        if self._facet_with_holes_constraints:
+            hf_constraints = np.asanyarray(
+                self._facet_with_holes_constraints,  # dtype=np.float64
+            ) + [len(self._facets), 0]
+            to_stack.append(hf_constraints)
+
+        if self._facet_constraints:
+            to_stack.extend(self._facet_constraints)
+
+        if to_stack:
+            pytetio["facet_constraints"] = np.vstack(to_stack)
+
+        if self._segment_constraints:
+            pytetio["segment_constraints"] = np.vstack(
+                self._segment_constraints
+            )
+
+        if debug:
+            pytetio["debug"] = debug
+
+        tetio = core.TetgenIO()
+        tetio.setup(**pytetio)
+
+        return tetio
 
     def show(self):
         pass
