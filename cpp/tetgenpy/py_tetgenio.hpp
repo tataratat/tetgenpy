@@ -76,6 +76,26 @@ public:
 
   // default ctor initializes. dtor clears.
   PyTetgenIo() { Base_::initialize(); }
+  PyTetgenIo(py::array_t<REAL> points,
+             py::list facets,
+             py::array_t<int> facet_markers,
+             py::list h_facets,
+             py::array_t<REAL> holes,
+             py::array_t<REAL> regions,
+             py::array_t<REAL> facet_constraints,
+             py::array_t<REAL> segment_constraints,
+             bool debug = false) {
+    Base_::initialize();
+    Setup(points,
+          facets,
+          facet_markers,
+          h_facets,
+          holes,
+          regions,
+          facet_constraints,
+          segment_constraints,
+          debug);
+  }
 
   /// load full set of input
   /// split input facets into 2 types:
@@ -228,24 +248,26 @@ public:
 
       // 1
       const int n_hf_holes = static_cast<int>(list_of_holes.size());
-      f->numberofholes = n_hf_holes;
-      f->holelist = new REAL[n_hf_holes * dim_];
-      i = 0;
-      for (py::handle hole : list_of_holes) {
-        // this needs to have len 3
-        int j{};
-        const auto hole_coord = hole.cast<py::list>();
-        if (hole_coord.size() != 3) {
-          PrintAndThrowError("h_facet holes must be 3D coordinates.",
-                             "Given hole has the size of (",
-                             hole_coord.size(),
-                             ")");
+      if (n_hf_holes > 0) {
+        f->numberofholes = n_hf_holes;
+        f->holelist = new REAL[n_hf_holes * dim_];
+        i = 0;
+        for (py::handle hole : list_of_holes) {
+          // this needs to have len 3
+          int j{};
+          const auto hole_coord = hole.cast<py::list>();
+          if (hole_coord.size() != 3) {
+            PrintAndThrowError("h_facet holes must be 3D coordinates.",
+                               "Given hole has the size of (",
+                               hole_coord.size(),
+                               ")");
+          }
+          for (py::handle coord : hole) {
+            f->holelist[i * dim_ + j] = coord.cast<REAL>();
+            ++j;
+          }
+          ++i;
         }
-        for (py::handle coord : hole) {
-          f->holelist[i * dim_ + j] = coord.cast<REAL>();
-          ++j;
-        }
-        ++i;
       }
 
       // 2
@@ -258,11 +280,12 @@ public:
     /* numberofholes, holelist */
     const int holes_size = static_cast<int>(holes.size());
     if (holes_size > 0) {
-      PrintDebug(debug, "setting holes.");
+      PrintDebug(debug, "setting  holes.");
       // shape check
       CheckPyArrayShape(holes, {-1, dim_});
 
       Base_::numberofholes = holes_size / dim_;
+      PrintDebug(debug, "->", Base_::numberofholes, "holes.");
       Base_::holelist = new REAL[holes_size];
       std::copy_n(static_cast<REAL*>(holes.request().ptr),
                   holes_size,
@@ -277,6 +300,7 @@ public:
       CheckPyArrayShape(regions, {-1, n_region_entries_});
 
       Base_::numberofregions = regions_size / n_region_entries_;
+      PrintDebug(debug, "->", Base_::numberofregions, "regions.");
       Base_::regionlist = new REAL[regions_size];
       std::copy_n(static_cast<REAL*>(regions.request().ptr),
                   regions_size,
@@ -286,6 +310,10 @@ public:
     /* numberoffacetconstraints, facetconstaintlist */
     const int f_constraints_size = static_cast<int>(facet_constraints.size());
     if (f_constraints_size > 0) {
+      PrintDebug(debug,
+                 "setting (",
+                 f_constraints_size,
+                 ") facet constraints.");
       CheckPyArrayShape(facet_constraints, {-1, n_facet_constraint_entries_});
 
       Base_::numberoffacetconstraints =
@@ -299,6 +327,10 @@ public:
     /* numberofsegmentconstraints, segmentconstraintlist */
     const int s_constraints_size = static_cast<int>(segment_constraints.size());
     if (s_constraints_size > 0) {
+      PrintDebug(debug,
+                 "setting (",
+                 s_constraints_size,
+                 ") segment constraints.");
       CheckPyArrayShape(segment_constraints,
                         {-1, n_segment_constraint_entries_});
 
@@ -350,6 +382,13 @@ public:
     return CopyFromBase(Base_::numberoftetrahedra,
                         Base_::numberofcorners,
                         Base_::tetrahedronlist);
+  }
+
+  // I - only for refinement / O
+  py::array_t<int> GetTetrahedronAttributes() {
+    return CopyFromBase(Base_::numberoftetrahedra,
+                        Base_::numberoftetrahedronattributes,
+                        Base_::tetrahedronattributelist);
   }
 
   // I - for refinement / O
@@ -514,6 +553,7 @@ inline void add_pytetgenio_class(py::module_& m) {
            py::arg("debug"))
       .def("points", &PyTetgenIo::GetPoints)
       .def("tetrahedra", &PyTetgenIo::GetTetrahedra)
+      .def("tetrahedronattributes", &PyTetgenIo::GetTetrahedronAttributes)
       .def("trifaces", &PyTetgenIo::GetTriFaces)
       .def("trifacemarkers", &PyTetgenIo::GetTriFaceMarkers)
       .def("neighbors", &PyTetgenIo::GetNeighbors)
