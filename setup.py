@@ -70,7 +70,7 @@ class CMakeBuild(build_ext):
             f"-DCMAKE_BUILD_TYPE={cfg}",  # not used on MSVC, but no harm
         ]
         # extra cmake args
-        #cmake_args.extend(ext.extra_args["cmake_args"])
+        # cmake_args.extend(ext.extra_args["cmake_args"])
 
         build_args = []
         # Adding CMake arguments set as environment variable
@@ -142,7 +142,7 @@ class CMakeBuild(build_ext):
                 # CMake 3.12+ only.
                 build_args += [f"-j{self.parallel}"]
 
-            #if len(ext.extra_args["build_args"]) != 0:
+            # if len(ext.extra_args["build_args"]) != 0:
             #    build_args.extend(ext.extra_args["build_args"])
 
         build_temp = Path(self.build_temp) / ext.name
@@ -183,11 +183,10 @@ setup(
         "Natural Language :: English",
         "Topic :: Scientific/Engineering",
     ],
-    ext_modules=[
-        CMakeExtension("tetgenpy.tetgenpy_core")
-    ],
+    ext_modules=[CMakeExtension("tetgenpy.tetgenpy_core")],
+    entry_points={"console_scripts": ["tetgen=tetgenpy:tetgen"]},
     cmdclass=dict(build_ext=CMakeBuild),
-    #extras_require={"test": ["pytest>=6.0"]},
+    # extras_require={"test": ["pytest>=6.0"]},
     zip_safe=False,
     license="MIT",
 )
