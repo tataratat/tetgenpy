@@ -1,9 +1,11 @@
-import tetgenpy
 import numpy as np
+
+import tetgenpy
 
 has_gus = False
 try:
     import gustaf as gus
+
     has_gus = True
 except:
     pass
@@ -81,7 +83,6 @@ if __name__ == "__main__":
     tetgenout = tetgenpy.tetrahedralize.tetrahedralize("", plc.to_tetgenio())
     gusshow(tetgenout)
 
-
     # 2. define facets with sequence of coordiantes instead of point ids.
     plc = tetgenpy.PLC()
     plc.add_facets(vertices()[faces()])
@@ -121,7 +122,6 @@ if __name__ == "__main__":
         "qa0.00005", plc.to_tetgenio()
     )
     gusshow(tetgenout)
-
 
     # 4. long box with "half" hole
     # this time, let's try it with add_holes()
@@ -166,23 +166,21 @@ if __name__ == "__main__":
     plc.add_holes([[0.5, 0.5, 0.5]])
 
     # attach another box
-    plc.add_points(
-        vertices()[[2,3,6,7]] + [0,1,0] # [16, 17, 18, 19]
-    )
+    plc.add_points(vertices()[[2, 3, 6, 7]] + [0, 1, 0])  # [16, 17, 18, 19]
     plc.add_facets(
         [
-            [16,17, 19, 18],
+            [16, 17, 19, 18],
             [7, 19, 18, 6],
             [6, 18, 16, 2],
-            [2,16,17,3],
-            [3, 17, 19,7],
+            [2, 16, 17, 3],
+            [3, 17, 19, 7],
         ]
     )
     # [x,y,z,region attribute, volume constraint]
     plc.add_regions(
         [
-            [.1,.1,.1,10, .00005],
-            [.1,1.1,.1,20, .1],
+            [0.1, 0.1, 0.1, 10, 0.00005],
+            [0.1, 1.1, 0.1, 20, 0.1],
         ]
     )
     tetgenout = tetgenpy.tetrahedralize.tetrahedralize(
