@@ -36,4 +36,4 @@ void PrintAndThrowError(Args&&... args) {
   std::cout << "\n";
   throw std::runtime_error("Error Occured! Abort the mission!");
 }
-} /* namespace splinepy::utils */
+} // namespace tetgenpy
