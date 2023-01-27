@@ -239,6 +239,43 @@ class PLC:
 
         self._regions.append(regions)
 
+    def add_segment_constraints(self, segments, constraint):
+        """
+        Add segment constraints.
+
+        Parameters
+        ----------
+        segments: array-like
+        constraint: float or array-like
+          If array-like, should have same len as segments
+
+        Returns
+        -------
+        None
+        """
+        segments = np.asanyarray(segments)
+        _check_2d_and_shape1("segments", segments, 2)
+
+        if isinstance(constraint, (int, float)):
+            constraint = np.full((len(segments), 1), constraint)
+
+        elif isinstance(constraint, (tuple, list, np.ndarray)):
+            constraint = np.asanyarray(constraint).reshape(-1, 1)
+
+            if len(constraint) != len(segments):
+                raise ValueError(
+                    f"Constraints ({len(constraint)}) should have same "
+                    f"length as segments ({len(segments)})"
+                )
+        else:
+            raise TypeError(
+                f"{type(constraint)} is invalid constraint type. "
+                f"Supports float or array-like."
+            )
+
+        seg_con = np.hstack((segments, constraint))
+        self._segment_constraints.append(seg_con)
+
     def sofarsogood(self):
         """assert for sanity check"""
 
@@ -299,6 +336,12 @@ class PLC:
 
         if debug:
             pytetio["debug"] = debug
+
+        # must be c contiguous
+        for key, value in pytetio.items():
+            if isinstance(value, np.ndarray):
+                if not value.flags.c_contiguous:
+                    pytetio[key] = np.ascontiguousarray(value)
 
         if as_dict:
             return pytetio
