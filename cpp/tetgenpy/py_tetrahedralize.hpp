@@ -11,7 +11,7 @@ namespace tetgenpy {
 namespace py = pybind11;
 
 void Tetrahedralize(std::string switches, PyTetgenIo& in, PyTetgenIo& out) {
-  char* c_switches = switches.data();
+  char* c_switches = &switches.front();
   tetrahedralize(c_switches, &in, &out);
   in.is_output_ = false;
   out.is_output_ = true;
@@ -32,7 +32,7 @@ int Main(py::list sys_argv) {
   std::vector<char*> argv_char;
   argv_char.reserve(argc);
   for (auto& a_s : argv_string) {
-    argv_char.emplace_back(a_s.data());
+    argv_char.emplace_back(&a_s.front());
   }
 
   char** argv = argv_char.data();

@@ -11,7 +11,7 @@ target_compile_options(tetgenpy_core
     PRIVATE
         ${TETGENPY_FLAGS}
         ${TETGENPY_OPTIMIZATION_FLAGS})
-target_compile_features(tetgenpy_core PUBLIC cxx_std_17)
+target_compile_features(tetgenpy_core PUBLIC cxx_std_11)
 
 # link splinepy
 target_link_libraries(tetgenpy_core PRIVATE tetgen)

@@ -5,34 +5,57 @@
 
 namespace tetgenpy {
 
+// Adapted from:
+// https://stackoverflow.com/questions/12342633/how-do-i-print-out-the-arguments-of-a-function-using-a-variadic-template
+
+// Single Print
+template<typename T>
+inline void SinglePrint(T t) {
+  std::cout << t << " ";
+}
+
+// Base case, no args
+inline void Print() {}
+
+// Split the parameter pack.
+// We want the first argument, so we can print it.
+// And the rest so we can forward it to the next call to f
+template<typename T, typename... Ts>
+inline void Print(T&& first, Ts&&... rest) {
+  // Print first
+  SinglePrint(std::forward<T>(first));
+  // Forward the rest.
+  Print(std::forward<Ts>(rest)...);
+}
+
 template<typename... Args>
-void PrintInfo(Args&&... args) {
+inline void PrintInfo(Args&&... args) {
   std::cout << "TETGENPY INFO - ";
-  ((std::cout << std::forward<Args>(args) << " "), ...);
+  Print(std::forward<Args>(args)...);
   std::cout << "\n";
 }
 
 /// debug printer - first argument is bool, so <on, off> is switchable.
 template<typename... Args>
-void PrintDebug(bool on, Args&&... args) {
+inline void PrintDebug(bool on, Args&&... args) {
   if (on) {
     std::cout << "TETGENPY DEBUG - ";
-    ((std::cout << std::forward<Args>(args) << " "), ...);
+    Print(std::forward<Args>(args)...);
     std::cout << "\n";
   }
 }
 
 template<typename... Args>
-void PrintWarning(Args&&... args) {
+inline void PrintWarning(Args&&... args) {
   std::cout << "TETGENPY WARNING - ";
-  ((std::cout << std::forward<Args>(args) << " "), ...);
+  Print(std::forward<Args>(args)...);
   std::cout << "\n";
 }
 
 template<typename... Args>
-void PrintAndThrowError(Args&&... args) {
+inline void PrintAndThrowError(Args&&... args) {
   std::cout << "TETGENPY ERROR - ";
-  ((std::cout << std::forward<Args>(args) << " "), ...);
+  Print(std::forward<Args>(args)...);
   std::cout << "\n";
   throw std::runtime_error("Error Occured! Abort the mission!");
 }
