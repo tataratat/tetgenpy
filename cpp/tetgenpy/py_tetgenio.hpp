@@ -70,6 +70,7 @@ public:
   static const int n_tet_per_edge_{1};
   static const int n_voroedge_corners_{2};
   static const int n_cell_neighbors_per_vorofacet_{2};
+  static const int n_point_metrics_{1}; // manual says it's always 1
 
   // out flag after tetrahedralize
   bool is_output_ = false;
@@ -77,6 +78,8 @@ public:
   // default ctor initializes. dtor clears.
   PyTetgenIo() { Base_::initialize(); }
   PyTetgenIo(py::array_t<REAL> points,
+             py::array_t<REAL> point_attributes,
+             py::array_t<REAL> point_metrics,
              py::list facets,
              py::array_t<int> facet_markers,
              py::list h_facets,
@@ -87,6 +90,8 @@ public:
              bool debug = false) {
     Base_::initialize();
     Setup(points,
+          point_attributes,
+          point_metrics,
           facets,
           facet_markers,
           h_facets,
@@ -104,6 +109,12 @@ public:
   ///
   /// points: (a, 3) np.ndarray
   ///   all points that appear for tetgen query
+  /// point_attributes: (a, n) np.ndarray
+  ///   attributes for each points. with "-w" switch, first attribute will be
+  ///   used as weights for weighted DT
+  /// point_metrics: (a, 1) np.ndarray
+  ///   sizing function defined at nodes. "-m" switch. Can have zero entries
+  ///   for points where you don't want to apply any sizing function.
   /// facets: list
   ///   coplanar single polygons
   /// facet_markers: (len(facets),) np.ndarray
@@ -119,6 +130,8 @@ public:
   ///   list of regions.
   ///   coordinate to mark the region, region attribute, max volume
   void Setup(py::array_t<REAL> points,
+             py::array_t<REAL> point_attributes,
+             py::array_t<REAL> point_metrics,
              py::list facets,
              py::array_t<int> facet_markers,
              py::list h_facets,
@@ -146,12 +159,48 @@ public:
                 Base_::pointlist);
     PrintDebug(debug, "set pointlist.");
 
+    /* numberofpointattributes, pointattributelist */
+    const int point_attributes_size = static_cast<int>(point_attributes.size());
+    if (point_attributes_size > 0) {
+      CheckPyArrayShape(point_attributes, {Base_::numberofpoints, -1});
+
+      Base_::numberofpointattributes =
+          static_cast<int>(point_attributes.shape(1));
+      PrintDebug(debug,
+                 "set numberofpointattributes:",
+                 Base_::numberofpointattributes);
+
+      Base_::pointattributelist = new REAL[point_attributes_size];
+      std::copy_n(static_cast<REAL*>(points.request().ptr),
+                  point_attributes_size,
+                  Base_::pointattributelist);
+      PrintDebug(debug, "set pointattributelist");
+    }
+
+    /* numberofpointmtrs, pointmtrlist */
+    const int point_metrics_size = static_cast<int>(point_metrics.size());
+    if (point_metrics_size > 0) {
+      CheckPyArrayShape(point_metrics,
+                        {Base_::numberofpoints, n_point_metrics_});
+
+      Base_::numberofpointmtrs = n_point_metrics_;
+      PrintDebug(debug, "set numberofpointmtrs");
+
+      Base_::pointmtrlist = new REAL[point_metrics_size];
+      std::copy_n(static_cast<REAL*>(point_metrics.request().ptr),
+                  point_metrics_size,
+                  Base_::pointmtrlist);
+      PrintDebug(debug, "set pointmtrlist");
+    }
+
     /* numberoffacets, facetlist, facetmarkerlist */
     const int n_facets = static_cast<int>(facets.size());
     const int n_facet_markers = static_cast<int>(facet_markers.size());
     const int n_h_facets = static_cast<int>(h_facets.size());
     Base_::numberoffacets = n_facets + n_h_facets;
-    Base_::facetlist = new Base_::facet[Base_::numberoffacets];
+    if (Base_::numberoffacets > 0) {
+      Base_::facetlist = new Base_::facet[Base_::numberoffacets];
+    }
     PrintDebug(debug, "set numberoffacets:", Base_::numberoffacets);
     PrintDebug(debug, "-> number of regular facets:", n_facets);
     PrintDebug(debug, "-> number of facets with holes:", n_h_facets);
@@ -172,7 +221,8 @@ public:
     Base_::polygon* p;
     for (int i{}; i < n_facets; ++i) {
 
-      // TODO does this work without any issue? else, try reinterpret_steal
+      // TODO does this work without any issue? else, try
+      // reinterpret_steal
       const auto polygon_connec = facets[i].cast<py::list>();
 
       // get facet and init
@@ -543,6 +593,8 @@ inline void add_pytetgenio_class(py::module_& m) {
       .def("setup",
            &PyTetgenIo::Setup,
            py::arg("points"),
+           py::arg("point_attributes"),
+           py::arg("point_metrics"),
            py::arg("facets"),
            py::arg("facet_markers"),
            py::arg("h_facets"),
