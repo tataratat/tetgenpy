@@ -352,7 +352,7 @@ public:
 
     // return if zero
     if (base_data_count == 0 || base_array_ptr == (DataType*) NULL) {
-      py::array_t<DataType>(0);
+      return py::array_t<DataType>(0);
     }
 
     const int base_array_len = base_data_count * base_data_stride;
