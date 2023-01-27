@@ -1,16 +1,19 @@
 import sys
 
-from tetgenpy import tetgenpy_core as core
 from tetgenpy import _version, plc
+from tetgenpy import tetgenpy_core as core
 from tetgenpy import tetrahedralize
 from tetgenpy.plc import PLC
 
 __version__ = _version.__version__
 
+
 def tetgen_exe(argv):
     """
     Calls tetgen executable with argv as a list.
     This call performs the same routine as tetgen's main().
+    The first element of argv is usually the executable name and tetgen also
+    expects that. However, this can be a dummy.
 
     Parameters
     ----------
@@ -27,9 +30,8 @@ def tetgen_exe(argv):
         if not isinstance(argv, list):
             raise TypeError("argv should be a list.")
 
-        # first elements should be always tetgen
-        if argv[0] != "tetgen":
-            argv = ["tetgen"] + argv
+        if len(argv) == 0:
+            raise ValueError("argv needs at least one element")
 
         return core.main(argv)
 
