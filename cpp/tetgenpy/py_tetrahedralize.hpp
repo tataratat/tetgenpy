@@ -22,7 +22,7 @@ int Main(py::list sys_argv) {
   int argc = static_cast<int>(sys_argv.size());
 
   // prepare argv
-  // TODO now sure how casting char* would work, so start from string
+  // now sure how casting char* would manage lifetime, so start from string
   std::vector<std::string> argv_string;
   argv_string.reserve(argc);
   for (auto& s_a : sys_argv) {
