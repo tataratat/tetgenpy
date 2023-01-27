@@ -76,12 +76,15 @@ def no_points_in_this_bound(points, bound):
         assert sum(in_range) == 0, f"points detected in ({i})-dim"
 
 
-def points_in_this_bound(points, bound):
+def points_in_this_bound(points, bound, all_=False):
     for i in range(len(bound[0])):
         in_range = np.logical_and(
             points[:, i] > bound[0][i], points[:, i] < bound[1][i]
         )
-        assert sum(in_range) > 0, f"points missing in ({i})-dim"
+        if all_:
+            assert sum(in_range) == len(points), f"points missing in ({i})-dim"
+        else:
+            assert sum(in_range) >= 0, f"points missing in ({i})-dim"
 
 
 def boxplc_using_holes():
@@ -140,6 +143,48 @@ class tetgenpyTest(unittest.TestCase):
 
         has_points_and_tets(tetgenout)
 
+    def test_plc2box_facet_ids(self):
+        plc = tetgenpy.PLC()
+        plc.add_points(vertices())
+        for i, f in enumerate(faces()):
+            plc.add_facets([f.tolist()], facet_id=int(i + 1))
+
+        # call tetrahedralize volume constraints switches (and `q`) to see if
+        # facet_ids has propagated
+        tetgenout = tetgenpy.tetrahedralize.tetrahedralize(
+            "qa0.005", plc.to_tetgenio()
+        )
+
+        has_points_and_tets(tetgenout)
+
+        points = tetgenout.points()
+        trifaces = tetgenout.trifaces()
+        trifacemarkers = tetgenout.trifacemarkers()
+
+        # no additional ids
+        assert np.allclose(
+            np.unique(trifacemarkers), list(range(1, len(faces()) + 1))
+        )
+
+        # has markers for all the faces
+        assert len(trifaces) == len(trifacemarkers)
+
+        # correct markers
+        for ui in np.unique(trifacemarkers):
+            boundary_faces = trifaces[trifacemarkers.ravel() == ui]
+            bf_point_ids = np.unique(boundary_faces)
+            p_on_f = points[bf_point_ids]
+
+            assert len(p_on_f)
+
+            tol = 1e-8
+            lower_b = p_on_f.min(axis=0)
+            upper_b = p_on_f.max(axis=0)
+
+            points_in_this_bound(
+                p_on_f, [lower_b - tol, upper_b + tol], all_=True
+            )
+
     def test_plc2box_coord_based(self):
         plc = tetgenpy.PLC()
         plc.add_facets(vertices()[faces()])
@@ -158,18 +203,15 @@ class tetgenpyTest(unittest.TestCase):
         plc.add_facet_with_holes(
             polygons=[[0, 1, 5, 4], [8, 9, 13, 12]],
             holes=[[0.5, 0.0, 0.5]],
-            facet_id=1,
         )
         # back
         plc.add_facet_with_holes(
             polygons=[[2, 3, 7, 6], [10, 11, 15, 14]],
             holes=[[0.5, 1.0, 0.5]],
-            facet_id=2,
         )
         # outer sides
         plc.add_facets(
             [[1, 3, 7, 5], [5, 7, 6, 4], [4, 6, 2, 0], [0, 2, 3, 1]],
-            3,
         )
         # inner sides
         plc.add_facets(
@@ -179,7 +221,6 @@ class tetgenpyTest(unittest.TestCase):
                 [12, 14, 10, 8],
                 [8, 10, 11, 9],
             ],
-            4,
         )
         tetgenout = tetgenpy.tetrahedralize.tetrahedralize(
             "", plc.to_tetgenio()
@@ -192,7 +233,9 @@ class tetgenpyTest(unittest.TestCase):
         lower_b = iv.min(axis=0)
         upper_b = iv.max(axis=0)
 
-        no_points_in_this_bound(tetgenout.points(), [lower_b, upper_b])
+        no_points_in_this_bound(
+            tetgenout.points(), [lower_b + tol, upper_b - tol]
+        )
 
     def test_plc2box_with_a_hole_using_holes(self):
         plc = boxplc_using_holes()
