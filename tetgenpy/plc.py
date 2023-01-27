@@ -3,7 +3,7 @@ Class to prepare input Piecewise Linear Complexes for tetgen.
 """
 import numpy as np
 
-from tetgenpy import core
+from tetgenpy import tetgenpy_core as core
 
 
 def _check_2d_and_shape1(name, array, shape1):
