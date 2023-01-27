@@ -7,6 +7,17 @@ from tetgenpy.plc import PLC
 
 __version__ = _version.__version__
 
+__all__ = [
+    "_version",
+    "__version__",
+    "plc",
+    "core",
+    "tetrahedralize",
+    "PLC",
+    "tetgen_exe",
+    "tetgen",
+]
+
 
 def tetgen_exe(argv):
     """

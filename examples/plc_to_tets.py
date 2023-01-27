@@ -7,7 +7,7 @@ try:
     import gustaf as gus
 
     has_gus = True
-except:
+except ImportError:
     pass
 
 
