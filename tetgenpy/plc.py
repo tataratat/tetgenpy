@@ -17,6 +17,8 @@ def _check_2d_and_shape1(name, array, shape1):
 class PLC:
     def __init__(self):
         self._points = []
+        self._point_attributes = []
+        self._point_metrics = []
         self._facets = []
         self._facet_with_holes = []
         self._holes = []
@@ -29,13 +31,15 @@ class PLC:
         # self._point_id_offset = 0
         self._facet_id_offset = 0
 
-    def add_points(self, points):
+    def add_points(self, points, point_attributes=None, point_metrics=None):
         """
         Adds points. list, tuple, or np.ndarray.
 
         Parameters
         ----------
         points: (n, 3)  array-like
+        point_attributes: float or (n, m) array-like
+        point_metrics: float or (n, 1) array-like
 
         Returns
         -------
@@ -48,6 +52,47 @@ class PLC:
 
         # append points
         self._points.append(points)
+
+        # append attributes and metrics
+        # first, make sure all points or none of them will have attr and mtr
+        if point_attributes is None and len(self._point_attributes) > 0:
+            raise ValueError(
+                "point attributes needs to be set for all points."
+            )
+        if point_metrics is None and len(self._point_metrics) > 0:
+            raise ValueError("point metrics needs to be set for all points.")
+
+        # process point attributes
+        if point_attributes is not None:
+            if isinstance(point_attributes, (list, tuple, np.ndarray)):
+                point_attributes = np.asanyarray(point_attributes)
+
+            elif isinstance(point_attributes, (int, float)):
+                point_attributes = np.full((len(points), 1), point_attributes)
+
+            # same sized attr
+            if len(self._point_attributes) > 0:
+                _check_2d_and_shape1(
+                    "point_attributes",
+                    point_attributes,
+                    self._point_attributes[-1].shape(1),
+                )
+
+            self._point_attributes.append(point_attributes)
+
+        # process point metrics
+        if point_metrics is not None:
+            if isinstance(point_metrics, (list, tuple, np.ndarray)):
+                point_metrics = np.asanyarray(point_metrics)
+
+            elif isinstance(point_metrics, (int, float)):
+                point_metrics = np.full((len(points), 1), point_metrics)
+
+            # same sized attr
+            if len(self._point_metrics) > 0:
+                _check_2d_and_shape1("point_metrics", point_metrics, 1)
+
+            self._point_metrics.append(point_metrics)
 
     def _process_polygons(self, polygons, coordinates=None):
         """
@@ -298,6 +343,8 @@ class PLC:
         # set required ones or ones that doesn't need further processing
         pytetio = {
             "points": np.vstack(self._points),
+            "point_attributes": [],
+            "point_metrics": [],
             "facets": self._facets,
             "facet_markers": self._facet_markers,
             "h_facets": self._facet_with_holes,
@@ -307,6 +354,12 @@ class PLC:
             "segment_constraints": [],
             "debug": False,
         }
+
+        if self._point_attributes:
+            pytetio["point_attributes"] = np.vstack(self._point_attributes)
+
+        if self._point_metrics:
+            pytetio["point_metrics"] = np.vstack(self._point_metrics)
 
         if self._holes:
             pytetio["holes"] = np.vstack(self._holes)
