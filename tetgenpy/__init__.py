@@ -57,7 +57,7 @@ def tetgen_exe(argv):
             raise err
 
 
-def tetgen():
+def _tetgen():
     """
     tetgen executable equivalent function.
 

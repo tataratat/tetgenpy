@@ -184,7 +184,7 @@ setup(
         "Topic :: Scientific/Engineering",
     ],
     ext_modules=[CMakeExtension("tetgenpy.tetgenpy_core")],
-    entry_points={"console_scripts": ["tetgen=tetgenpy:tetgen"]},
+    entry_points={"console_scripts": ["tetgen=tetgenpy:_tetgen"]},
     cmdclass=dict(build_ext=CMakeBuild),
     # extras_require={"test": ["pytest>=6.0"]},
     zip_safe=False,
