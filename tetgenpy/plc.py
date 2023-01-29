@@ -15,7 +15,12 @@ def _check_2d_and_shape1(name, array, shape1):
 
 
 class PLC:
+    """ """
+
     def __init__(self):
+        """
+        Initializes all the properties to pass to tetgenio.
+        """
         self._points = []
         self._point_attributes = []
         self._point_metrics = []
