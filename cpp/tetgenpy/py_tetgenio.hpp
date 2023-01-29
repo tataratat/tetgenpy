@@ -51,6 +51,8 @@ static bool CheckPyArrayShape(const py::array_t<ValueType> arr,
 }
 
 class PyTetgenIo : public tetgenio {
+protected:
+  bool set_called_ = false;
 
 public:
   using Base_ = tetgenio;
@@ -102,6 +104,14 @@ public:
           debug);
   }
 
+  void ClearPreviousSet() {
+    if (set_called_) {
+      Base_::clean_memory();
+      Base_::initialize();
+      set_called_ = false;
+    }
+  }
+
   /// load full set of input
   /// split input facets into 2 types:
   ///   1) facets without a hole
@@ -140,6 +150,9 @@ public:
              py::array_t<REAL> facet_constraints,
              py::array_t<REAL> segment_constraints,
              bool debug = false) {
+
+    ClearPreviousSet();
+    set_called_ = true;
 
     PrintDebug(debug, "Starting PyTetgenIo::Load");
 
@@ -391,6 +404,20 @@ public:
                   s_constraints_size * n_segment_constraint_entries_,
                   Base_::segmentconstraintlist);
     }
+  }
+
+  // Setup Existing TetMesh, perhaps to refine, perhaps to coarsen
+  void SetupTetMesh(py::array_t<REAL> points,
+                    py::array_t<REAL> point_attributes,
+                    py::array_t<REAL> point_metrics,
+                    py::array_t<int> tetrahedra,
+                    py::array_t<REAL> tetrahedron_attributes,
+                    py::array_t<REAL> tetrahedron_constraints, // tetvolumelist
+                    py::array_t<int> refine_elements,          // (n, 4)
+                    py::array_t<int> refine_elements_volume    // (n, 1)
+  ) {
+    ClearPreviousSet();
+    set_called_ = true;
   }
 
   /* getters */
