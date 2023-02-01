@@ -66,12 +66,14 @@ public:
   static const int n_facet_constraint_entries_{2};
   static const int n_segment_constraint_entries_{3};
   static const int n_triface_corners_{3};
+  static const int n_triface_additional_second_order_nodes_{3};
   static const int n_tet_neighbors_{4};
   static const int n_faces_per_tet_{4};
   static const int n_edges_per_tet_{6};
   static const int n_tet_neighbors_per_face_{2}; // -1 entry for outer face
   static const int n_edges_per_face_{3};
   static const int n_edge_corners_{2};
+  static const int n_edge_additional_second_order_nodes_{1};
   static const int n_tet_per_edge_{1};
   static const int n_voroedge_corners_{2};
   static const int n_cell_neighbors_per_vorofacet_{2};
@@ -107,6 +109,7 @@ public:
              debug);
   }
 
+  /// calls clean_memory() if set_called_ flag is set.
   void ClearPreviousSet() {
     if (set_called_) {
       Base_::clean_memory();
@@ -419,18 +422,31 @@ public:
     }
   }
 
-  // Setup Existing TetMesh, perhaps to refine, perhaps to coarsen
+  /// Setup Existing TetMesh, perhaps to refine, perhaps to coarsen,
+  /// perhaps as a background mesh.
   void SetupTetMesh(py::array_t<REAL> points,
                     py::array_t<REAL> point_attributes,
                     py::array_t<REAL> point_metrics,
-                    py::array_t<int> tetrahedra,
+                    py::array_t<int> tetrahedra, // (n, 4)
                     py::array_t<REAL> tetrahedron_attributes,
                     py::array_t<REAL> tetrahedron_constraints, // tetvolumelist
                     py::array_t<int> refine_elements,          // (n, 4)
-                    py::array_t<int> refine_elements_volume    // (n, 1)
-  ) {
-    ClearPreviousSet();
-    set_called_ = true;
+                    py::array_t<REAL> refine_elements_volume,  // (n, 1)
+                    py::array_t<int> trifaces,
+                    py::array_t<int> triface_markers,
+                    py::array_t<int> edges,
+                    py::array_t<int> edge_markers,
+                    bool debug) {
+    PrintDebug(debug, "Starting PyTetgenIo::SetupTetMesh");
+    // this call clears tetgenio
+    SetupPoints(points, point_attributes, point_metrics, debug);
+
+    /* tetrahedronlist, numberoftetrahdra */
+    /* tetrahedronattributelist, numberoftetrahedronattributes */
+    /* tetrahedronvolumelist */
+    /* refine_elem_list, refine_elem_vol_list, numberofrefineelems */
+    /* trifacelist, trifacemarkerlist, numberoftrifaces */
+    /* edgelist, edgemarkerlist, numberofedges */
   }
 
   /* getters */
@@ -492,6 +508,12 @@ public:
     return CopyFromBase(Base_::numberoftrifaces, 1, Base_::trifacemarkerlist);
   }
 
+  py::array_t<int> GetO2Faces() {
+    return CopyFromBase(Base_::numberoftrifaces,
+                        n_triface_additional_second_order_nodes_,
+                        Base_::o2facelist);
+  }
+
   py::array_t<int> GetNeighbors() {
     return CopyFromBase(Base_::numberoftetrahedra,
                         n_tet_neighbors_,
@@ -528,6 +550,12 @@ public:
 
   py::array_t<int> GetEdgeMarkers() {
     return CopyFromBase(Base_::numberofedges, 1, Base_::edgemarkerlist);
+  }
+
+  py::array_t<int> GetO2Edges() {
+    return CopyFromBase(Base_::numberofedges,
+                        n_edge_additional_second_order_nodes_,
+                        Base_::o2edgelist);
   }
 
   py::array_t<int> GetEdge2Tets() {
