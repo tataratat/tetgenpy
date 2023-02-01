@@ -405,7 +405,7 @@ class PLC:
             return pytetio
 
         tetio = core.TetgenIO()
-        tetio.setup(**pytetio)
+        tetio.setup_plc(**pytetio)
 
         return tetio
 
