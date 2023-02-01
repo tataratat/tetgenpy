@@ -50,6 +50,12 @@ static bool CheckPyArrayShape(const py::array_t<ValueType> arr,
   return true;
 }
 
+
+/// std::string to char*
+inline char* ToCharPtr(std::string& str_in) {
+    return &str_in.front();
+}
+
 class PyTetgenIo : public tetgenio {
 protected:
   bool set_called_ = false;
@@ -609,6 +615,35 @@ public:
     voronoi["cells"] = cells;
 
     return voronoi;
+  }
+
+  // save to files
+  void SaveNodes(std::string fbase) {
+    Base_::save_nodes(ToCharPtr(fbase));
+  }
+
+  void SaveElements(std::string fbase) {
+    Base_::save_elements(ToCharPtr(fbase));
+  }
+
+  void SaveFaces(std::string fbase) {
+    Base_::save_faces(ToCharPtr(fbase));
+  }
+
+  void SaveEdges(std::string fbase) {
+    Base_::save_neighbors(ToCharPtr(fbase));
+  }
+
+  void SaveNeighbors(std::string fbase) {
+    Base_::save_neighbors(ToCharPtr(fbase));
+  }
+
+  void SavePoly(std::string fbase) {
+    Base_::save_poly(ToCharPtr(fbase));
+  }
+
+  void SaveFaces2Smesh(std::string fbase) {
+    Base_::save_faces2smesh(ToCharPtr(fbase));
   }
 };
 
