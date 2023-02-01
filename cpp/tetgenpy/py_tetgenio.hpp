@@ -50,11 +50,8 @@ static bool CheckPyArrayShape(const py::array_t<ValueType> arr,
   return true;
 }
 
-
 /// std::string to char*
-inline char* ToCharPtr(std::string& str_in) {
-    return &str_in.front();
-}
+inline char* ToCharPtr(std::string& str_in) { return &str_in.front(); }
 
 class PyTetgenIo : public tetgenio {
 protected:
@@ -97,17 +94,17 @@ public:
              py::array_t<REAL> segment_constraints,
              bool debug = false) {
     Base_::initialize();
-    Setup(points,
-          point_attributes,
-          point_metrics,
-          facets,
-          facet_markers,
-          h_facets,
-          holes,
-          regions,
-          facet_constraints,
-          segment_constraints,
-          debug);
+    SetupPlc(points,
+             point_attributes,
+             point_metrics,
+             facets,
+             facet_markers,
+             h_facets,
+             holes,
+             regions,
+             facet_constraints,
+             segment_constraints,
+             debug);
   }
 
   void ClearPreviousSet() {
@@ -118,52 +115,15 @@ public:
     }
   }
 
-  /// load full set of input
-  /// split input facets into 2 types:
-  ///   1) facets without a hole
-  ///   2) facets with holes (we will refer to this as h_facet)
-  ///
-  /// points: (a, 3) np.ndarray
-  ///   all points that appear for tetgen query
-  /// point_attributes: (a, n) np.ndarray
-  ///   attributes for each points. with "-w" switch, first attribute will be
-  ///   used as weights for weighted DT
-  /// point_metrics: (a, 1) np.ndarray
-  ///   sizing function defined at nodes. "-m" switch. Can have zero entries
-  ///   for points where you don't want to apply any sizing function.
-  /// facets: list
-  ///   coplanar single polygons
-  /// facet_markers: (len(facets),) np.ndarray
-  ///   facet marker. If this facet is at boundary, this will be boundary id.
-  ///   len(facet_markers) == len(facets) should hold
-  /// h_facets: list
-  ///   nested list for self contained facet description with holes list,
-  ///   as well as marker.
-  ///   [list of h_facet polygons, list of holes, facet marker]
-  /// holes: (b, 3) np.ndarray
-  ///   list of holes. this pokes holes.
-  /// regions: (c, 5) np.ndarray
-  ///   list of regions.
-  ///   coordinate to mark the region, region attribute, max volume
-  void Setup(py::array_t<REAL> points,
-             py::array_t<REAL> point_attributes,
-             py::array_t<REAL> point_metrics,
-             py::list facets,
-             py::array_t<int> facet_markers,
-             py::list h_facets,
-             py::array_t<REAL> holes,
-             py::array_t<REAL> regions,
-             py::array_t<REAL> facet_constraints,
-             py::array_t<REAL> segment_constraints,
-             bool debug = false) {
+  void SetupPoints(py::array_t<REAL> points,
+                   py::array_t<REAL> point_attributes,
+                   py::array_t<REAL> point_metrics,
+                   bool debug) {
 
     ClearPreviousSet();
     set_called_ = true;
 
-    PrintDebug(debug, "Starting PyTetgenIo::Load");
-
-    // define some constants
-    const int n_polygon_per_facet{1};
+    PrintDebug(debug, "Starting PyTetgenIo::SetupPoints");
 
     /* numberofpoints, pointlist */
     // points shape test - 3D!
@@ -211,6 +171,53 @@ public:
                   Base_::pointmtrlist);
       PrintDebug(debug, "set pointmtrlist");
     }
+  }
+
+  /// load full set of input
+  /// split input facets into 2 types:
+  ///   1) facets without a hole
+  ///   2) facets with holes (we will refer to this as h_facet)
+  ///
+  /// points: (a, 3) np.ndarray
+  ///   all points that appear for tetgen query
+  /// point_attributes: (a, n) np.ndarray
+  ///   attributes for each points. with "-w" switch, first attribute will be
+  ///   used as weights for weighted DT
+  /// point_metrics: (a, 1) np.ndarray
+  ///   sizing function defined at nodes. "-m" switch. Can have zero entries
+  ///   for points where you don't want to apply any sizing function.
+  /// facets: list
+  ///   coplanar single polygons
+  /// facet_markers: (len(facets),) np.ndarray
+  ///   facet marker. If this facet is at boundary, this will be boundary id.
+  ///   len(facet_markers) == len(facets) should hold
+  /// h_facets: list
+  ///   nested list for self contained facet description with holes list,
+  ///   as well as marker.
+  ///   [list of h_facet polygons, list of holes, facet marker]
+  /// holes: (b, 3) np.ndarray
+  ///   list of holes. this pokes holes.
+  /// regions: (c, 5) np.ndarray
+  ///   list of regions.
+  ///   coordinate to mark the region, region attribute, max volume
+  void SetupPlc(py::array_t<REAL> points,
+                py::array_t<REAL> point_attributes,
+                py::array_t<REAL> point_metrics,
+                py::list facets,
+                py::array_t<int> facet_markers,
+                py::list h_facets,
+                py::array_t<REAL> holes,
+                py::array_t<REAL> regions,
+                py::array_t<REAL> facet_constraints,
+                py::array_t<REAL> segment_constraints,
+                bool debug = false) {
+
+    PrintDebug(debug, "Starting PyTetgenIo::SetupPlc");
+    // this call clears tetgenio
+    SetupPoints(points, point_attributes, point_metrics, debug);
+
+    // define some constants
+    const int n_polygon_per_facet{1};
 
     /* numberoffacets, facetlist, facetmarkerlist */
     const int n_facets = static_cast<int>(facets.size());
@@ -618,29 +625,21 @@ public:
   }
 
   // save to files
-  void SaveNodes(std::string fbase) {
-    Base_::save_nodes(ToCharPtr(fbase));
-  }
+  void SaveNodes(std::string fbase) { Base_::save_nodes(ToCharPtr(fbase)); }
 
   void SaveElements(std::string fbase) {
     Base_::save_elements(ToCharPtr(fbase));
   }
 
-  void SaveFaces(std::string fbase) {
-    Base_::save_faces(ToCharPtr(fbase));
-  }
+  void SaveFaces(std::string fbase) { Base_::save_faces(ToCharPtr(fbase)); }
 
-  void SaveEdges(std::string fbase) {
-    Base_::save_neighbors(ToCharPtr(fbase));
-  }
+  void SaveEdges(std::string fbase) { Base_::save_neighbors(ToCharPtr(fbase)); }
 
   void SaveNeighbors(std::string fbase) {
     Base_::save_neighbors(ToCharPtr(fbase));
   }
 
-  void SavePoly(std::string fbase) {
-    Base_::save_poly(ToCharPtr(fbase));
-  }
+  void SavePoly(std::string fbase) { Base_::save_poly(ToCharPtr(fbase)); }
 
   void SaveFaces2Smesh(std::string fbase) {
     Base_::save_faces2smesh(ToCharPtr(fbase));
@@ -652,8 +651,8 @@ inline void add_pytetgenio_class(py::module_& m) {
   py::class_<PyTetgenIo> klasse(m, "TetgenIO");
 
   klasse.def(py::init<>())
-      .def("setup",
-           &PyTetgenIo::Setup,
+      .def("setup_plc",
+           &PyTetgenIo::SetupPlc,
            py::arg("points"),
            py::arg("point_attributes"),
            py::arg("point_metrics"),
