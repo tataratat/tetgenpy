@@ -68,6 +68,7 @@ public:
   static const int n_triface_corners_{3};
   static const int n_triface_additional_second_order_nodes_{3};
   static const int n_tet_neighbors_{4};
+  static const int n_input_tet_corners_{4};
   static const int n_faces_per_tet_{4};
   static const int n_edges_per_tet_{6};
   static const int n_tet_neighbors_per_face_{2}; // -1 entry for outer face
@@ -431,7 +432,7 @@ public:
                     py::array_t<REAL> tetrahedron_attributes,
                     py::array_t<REAL> tetrahedron_constraints, // tetvolumelist
                     py::array_t<int> refine_elements,          // (n, 4)
-                    py::array_t<REAL> refine_elements_volume,  // (n, 1)
+                    py::array_t<REAL> refine_element_constraints, // (n, 1)
                     py::array_t<int> trifaces,
                     py::array_t<int> triface_markers,
                     py::array_t<int> edges,
@@ -442,11 +443,112 @@ public:
     SetupPoints(points, point_attributes, point_metrics, debug);
 
     /* tetrahedronlist, numberoftetrahdra */
+    // for input, only take linear tets
+    CheckPyArrayShape(tetrahedra, {-1, n_input_tet_corners_});
+
+    Base_::numberoftetrahedra = static_cast<int>(tetrahedra.shape(0));
+    PrintDebug(debug, "set numberoftetrahedra:", Base_::numberoftetrahedra);
+
+    const int tetlist_size = Base_::numberoftetrahedra * n_input_tet_corners_;
+    Base_::tetrahedronlist = new int[tetlist_size];
+    std::copy_n(static_cast<int*>(tetrahedra.request().ptr),
+                tetlist_size,
+                Base_::tetrahedronlist);
+    PrintDebug(debug, "set tetrahedronlist.");
+
     /* tetrahedronattributelist, numberoftetrahedronattributes */
+    const int tet_attr_size = static_cast<int>(tetrahedron_attributes.size());
+    if (tet_attr_size > 0) {
+      // just needs to be 2D
+      CheckPyArrayShape(tetrahedron_attributes,
+                        {Base_::numberoftetrahedra, -1});
+
+      Base_::numberoftetrahedronattributes =
+          static_cast<int>(tetrahedron_attributes.shape(1));
+      PrintDebug(debug,
+                 "set numberoftetrahedronattributes:",
+                 Base_::numberoftetrahedronattributes);
+      std::copy_n(static_cast<REAL*>(tetrahedron_attributes.request().ptr),
+                  tet_attr_size,
+                  Base_::tetrahedronattributelist);
+      PrintDebug(debug, "set tetrahedronattributelist.");
+    }
+
     /* tetrahedronvolumelist */
+    const int tet_vol_size = static_cast<int>(tetrahedron_constraints.size());
+    if (tet_vol_size > 0) {
+      CheckPyArrayShape(tetrahedron_constraints,
+                        {Base_::numberoftetrahedra, 1});
+
+      std::copy_n(static_cast<REAL*>(tetrahedron_constraints.request().ptr),
+                  tet_vol_size,
+                  Base_::tetrahedronvolumelist);
+      PrintDebug(debug, "set tetrahedronvolumelist.");
+    }
+
     /* refine_elem_list, refine_elem_vol_list, numberofrefineelems */
+    const int refine_elem_size = static_cast<int>(refine_elements.size());
+    if (refine_elem_size > 0) {
+      // size check
+      CheckPyArrayShape(refine_elements, {-1, n_input_tet_corners_});
+      Base_::numberofrefineelems = static_cast<int>(refine_elements.shape(0));
+      PrintDebug(debug, "set numberofrefineelems:", Base_::numberofrefineelems);
+
+      CheckPyArrayShape(refine_element_constraints,
+                        {Base_::numberofrefineelems, 1});
+      std::copy_n(static_cast<int*>(refine_elements.request().ptr),
+                  refine_elem_size,
+                  Base_::refine_elem_list);
+      PrintDebug(debug, "set refine_elem_list.");
+
+      std::copy_n(static_cast<REAL*>(refine_element_constraints.request().ptr),
+                  Base_::numberofrefineelems,
+                  Base_::refine_elem_vol_list);
+      PrintDebug(debug, "set refine_elem_vol_list.");
+    }
+
     /* trifacelist, trifacemarkerlist, numberoftrifaces */
+    const int trifaces_size = static_cast<int>(trifaces.size());
+    if (trifaces_size > 0) {
+      CheckPyArrayShape(trifaces, {-1, n_triface_corners_});
+      Base_::numberoftrifaces = static_cast<int>(trifaces.shape(0));
+      PrintDebug(debug, "set numberoftrifaces:", Base_::numberoftrifaces);
+      std::copy_n(static_cast<int*>(trifaces.request().ptr),
+                  trifaces_size,
+                  Base_::trifacelist);
+      PrintDebug(debug, "set trifacelist.");
+
+      const int triface_markers_size = static_cast<int>(triface_markers.size());
+      if (triface_markers_size > 0) {
+        CheckPyArrayShape(triface_markers, {Base_::numberoftrifaces, 1});
+        std::copy_n(static_cast<int*>(triface_markers.request().ptr),
+                    triface_markers_size,
+                    Base_::trifacemarkerlist);
+        PrintDebug(debug, "set trifacemarkerlist.");
+      }
+    }
+
     /* edgelist, edgemarkerlist, numberofedges */
+    const int edges_size = static_cast<int>(edges.size());
+    if (edges_size > 0) {
+      CheckPyArrayShape(edges, {-1, n_edge_corners_});
+      Base_::numberofedges = static_cast<int>(edges.shape(0));
+      PrintDebug(debug, "set numberofedges:", Base_::numberofedges);
+
+      std::copy_n(static_cast<int*>(edges.request().ptr),
+                  edges_size,
+                  Base_::edgelist);
+      PrintDebug(debug, "set edgelist.");
+
+      const int edge_markers_size = static_cast<int>(edge_markers.size());
+      if (edge_markers_size > 0) {
+        CheckPyArrayShape(edge_markers, {Base_::numberofedges, 1});
+        std::copy_n(static_cast<int*>(edge_markers.request().ptr),
+                    edge_markers_size,
+                    Base_::edgemarkerlist);
+        PrintDebug(debug, "set edgemarkerlist");
+      }
+    }
   }
 
   /* getters */
