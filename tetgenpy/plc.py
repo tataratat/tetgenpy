@@ -35,6 +35,7 @@ class PLC:
 
         # self._point_id_offset = 0
         self._facet_id_offset = 0
+        self.default_facet_id = -123454321
 
     def add_points(self, points, point_attributes=None, point_metrics=None):
         """
@@ -136,7 +137,7 @@ class PLC:
         return polygons
 
     def add_facets(
-        self, polygons, facet_id=-1, facet_constraints=None, coordinates=None
+        self, polygons, facet_id=None, facet_constraints=None, coordinates=None
     ):
         """
         Adds facets with one polygon per facet.
@@ -148,7 +149,7 @@ class PLC:
           coordinates are expected to have [[[x1_1, y1_2, z1_3], ...], ...]
           and indices [[p1_1, p1_2, ...], ... ].
         facet_id: int
-          value used to set facetmarker.
+          value used to set facetmarker. Default is -123454321.
           can be also interpreted as boundary id as all the output faces on
           this facet will have this id.
         facet_constraints: float or list
@@ -162,17 +163,56 @@ class PLC:
         -------
         None
         """
+        facet_id_None = False
+        if facet_id is None:
+            facet_id_None = True
+            facet_id = int(self.default_facet_id)
+
         # make sure polygons are list of list referring to points
         processed_polygon_ids = self._process_polygons(polygons, coordinates)
         n_polygons = len(processed_polygon_ids)
 
         # by now, we should have points and ids.
         self._facets.extend(processed_polygon_ids)
-        self._facet_markers.extend([facet_id] * n_polygons)
+
+        # facet_ids
+        single_facet_id = True
+        if isinstance(facet_id, (int, float)):
+            self._facet_markers.extend([facet_id] * n_polygons)
+        elif isinstance(facet_id, (tuple, list, np.ndarray)):
+            single_facet_id = False
+            if isinstance(facet_id, np.ndarray):
+                facet_id = facet_id.ravel().tolist()
+
+            # assumes flat list
+            if len(facet_id) != n_polygons:
+                raise ValueError(
+                    "For multiple facet_id inputs, "
+                    f"len(facet_id)->({len(facet_id)}) should match "
+                    f"len(polygons)->({n_polygons})."
+                )
+            self._facet_markers.extend(facet_id)
+        else:
+            raise TypeError("facet_id should be int or array-like.")
+
+        # add offset
         self._facet_id_offset += n_polygons
 
         if facet_constraints is not None:
+            # make sure this facet has special marker
+            if facet_id_None:
+                raise ValueError(
+                    "Please specify `facet_id` to apply `facet_constaints`"
+                )
+
+            # you can apply multiple constraints - you must have provided
+            # multiple facet_ids.
             if isinstance(facet_constraints, (tuple, list, np.ndarray)):
+                if single_facet_id:
+                    raise ValueError(
+                        "Can't accept multiple facet_constaints, if only "
+                        "one facet_id is given."
+                    )
                 f_constraints = np.asanyarray(facet_constraints).reshape(-1, 2)
                 # same length check
                 if len(f_constraints) != n_polygons:
@@ -183,16 +223,18 @@ class PLC:
                     )
 
             elif isinstance(facet_constraints, (int, float)):
-                f_constraints = np.empty((n_polygons, 2), dtype=np.float64)
-                f_constraints[:, 0] = np.arange(
-                    self._facet_id_offset - n_polygons, self._facet_id_offset
-                )
-                f_constraints[:, 1] = facet_constraints
+                # single facet id -> single constraint
+                if single_facet_id:
+                    f_constraints = np.array([[facet_id, facet_constraints]])
+                else:
+                    f_constraints = np.empty((n_polygons, 2), dtype=np.float64)
+                    f_constraints[:, 0] = facet_id  # multiple.
+                    f_constraints[:, 1] = facet_constraints
 
             else:
                 raise TypeError(
                     "facet_constraints should be array-like or float. "
-                    f"Given {type(facet_constraints)}"
+                    f"Given {type(facet_constraints)}."
                 )
 
             self._facet_constraints.append(f_constraints)
@@ -201,7 +243,7 @@ class PLC:
         self,
         polygons,
         holes,
-        facet_id=-1,
+        facet_id=None,
         coordinates=None,
         facet_constraint=None,
     ):
@@ -222,6 +264,12 @@ class PLC:
         -------
         None
         """
+        # default facet_id
+        facet_id_None = False
+        if facet_id is None:
+            facet_id_None = True
+            facet_id = int(self.default_facet_id)
+
         # facets
         processed_polygon_ids = self._process_polygons(polygons, coordinates)
 
@@ -243,11 +291,17 @@ class PLC:
 
         # optional facet constraint
         if facet_constraint is not None:
+            # make sure this facet has special marker
+            if facet_id_None:
+                raise ValueError(
+                    "Please specify `facet_id` to apply `facet_constaints`"
+                )
+
             if not isinstance(facet_constraint, (int, float)):
                 raise TypeError("facet_constraint should be float.")
 
             self._facet_with_holes_constraints.append(
-                [len(self._facet_with_holes) - 1, facet_constraint]
+                [facet_id, facet_constraint]
             )
 
     def add_holes(self, holes):
@@ -376,9 +430,7 @@ class PLC:
         # apply offset now.
         to_stack = []
         if self._facet_with_holes_constraints:
-            hf_constraints = np.asanyarray(
-                self._facet_with_holes_constraints,  # dtype=np.float64
-            ) + [len(self._facets), 0]
+            hf_constraints = np.asanyarray(self._facet_with_holes_constraints)
             to_stack.append(hf_constraints)
 
         if self._facet_constraints:
