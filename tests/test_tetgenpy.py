@@ -137,9 +137,7 @@ class tetgenpyTest(unittest.TestCase):
         plc.add_facets(faces())
 
         # call tetrahedralize without any switches
-        tetgenout = tetgenpy.tetrahedralize.tetrahedralize(
-            "Q", plc.to_tetgenio()
-        )
+        tetgenout = tetgenpy.tetrahedralize("Q", plc.to_tetgenio())
 
         has_points_and_tets(tetgenout)
 
@@ -151,9 +149,7 @@ class tetgenpyTest(unittest.TestCase):
 
         # call tetrahedralize volume constraints switches (and `q`) to see if
         # facet_ids has propagated
-        tetgenout = tetgenpy.tetrahedralize.tetrahedralize(
-            "Qqa0.005", plc.to_tetgenio()
-        )
+        tetgenout = tetgenpy.tetrahedralize("Qqa0.005", plc.to_tetgenio())
 
         has_points_and_tets(tetgenout)
 
@@ -188,9 +184,7 @@ class tetgenpyTest(unittest.TestCase):
     def test_plc2box_coord_based(self):
         plc = tetgenpy.PLC()
         plc.add_facets(vertices()[faces()])
-        tetgenout = tetgenpy.tetrahedralize.tetrahedralize(
-            "Q", plc.to_tetgenio()
-        )
+        tetgenout = tetgenpy.tetrahedralize("Q", plc.to_tetgenio())
 
         has_points_and_tets(tetgenout)
 
@@ -222,9 +216,7 @@ class tetgenpyTest(unittest.TestCase):
                 [8, 10, 11, 9],
             ],
         )
-        tetgenout = tetgenpy.tetrahedralize.tetrahedralize(
-            "Q", plc.to_tetgenio()
-        )
+        tetgenout = tetgenpy.tetrahedralize("Q", plc.to_tetgenio())
 
         has_points_and_tets(tetgenout)
 
@@ -240,9 +232,7 @@ class tetgenpyTest(unittest.TestCase):
     def test_plc2box_with_a_hole_using_holes(self):
         plc = boxplc_using_holes()
 
-        tetgenout = tetgenpy.tetrahedralize.tetrahedralize(
-            "Q", plc.to_tetgenio()
-        )
+        tetgenout = tetgenpy.tetrahedralize("Q", plc.to_tetgenio())
 
         has_points_and_tets(tetgenout)
 
@@ -269,9 +259,7 @@ class tetgenpyTest(unittest.TestCase):
                 [3, 17, 19, 7],
             ]
         )
-        tetgenout = tetgenpy.tetrahedralize.tetrahedralize(
-            "Q", plc.to_tetgenio()
-        )
+        tetgenout = tetgenpy.tetrahedralize("Q", plc.to_tetgenio())
 
         has_points_and_tets(tetgenout)
 
@@ -315,9 +303,7 @@ class tetgenpyTest(unittest.TestCase):
             ]
         )
 
-        tetgenout = tetgenpy.tetrahedralize.tetrahedralize(
-            "QAaq", plc.to_tetgenio()
-        )
+        tetgenout = tetgenpy.tetrahedralize("QAaq", plc.to_tetgenio())
 
         has_points_and_tets(tetgenout)
 
