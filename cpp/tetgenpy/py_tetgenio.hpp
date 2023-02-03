@@ -787,6 +787,12 @@ inline void add_pytetgenio_class(py::module_& m) {
   py::class_<PyTetgenIo> klasse(m, "TetgenIO");
 
   klasse.def(py::init<>())
+      .def("setup_points",
+           &PyTetgenIo::SetupPoints,
+           py::arg("points"),
+           py::arg("point_attributes"),
+           py::arg("point_metrics"),
+           py::arg("debug") = false)
       .def("setup_plc",
            &PyTetgenIo::SetupPlc,
            py::arg("points"),
@@ -799,7 +805,22 @@ inline void add_pytetgenio_class(py::module_& m) {
            py::arg("regions"),
            py::arg("facet_constraints"),
            py::arg("segment_constraints"),
-           py::arg("debug"))
+           py::arg("debug") = false)
+      .def("setup_tetmesh",
+           &PyTetgenIo::SetupTetMesh,
+           py::arg("points"),
+           py::arg("point_attributes"),
+           py::arg("point_metrics"),
+           py::arg("tetrahedra"),
+           py::arg("tetrahedron_attributes"),
+           py::arg("tetrahedron_constraints"),
+           py::arg("refine_elements"),
+           py::arg("refine_element_constraints"),
+           py::arg("trifaces"),
+           py::arg("triface_markers"),
+           py::arg("edges"),
+           py::arg("edge_markers"),
+           py::arg("debug") = false)
       .def("points", &PyTetgenIo::GetPoints)
       .def("tetrahedra", &PyTetgenIo::GetTetrahedra)
       .def("tetrahedronattributes", &PyTetgenIo::GetTetrahedronAttributes)
@@ -813,7 +834,16 @@ inline void add_pytetgenio_class(py::module_& m) {
       .def("edges", &PyTetgenIo::GetEdges)
       .def("edgemarkers", &PyTetgenIo::GetEdgeMarkers)
       .def("edge2tets", &PyTetgenIo::GetEdge2Tets)
-      .def("voronoi", &PyTetgenIo::GetVoronoi);
+      .def("voronoi", &PyTetgenIo::GetVoronoi)
+      .def("save_nodes", &PyTetgenIo::SaveNodes, py::arg("fname_base"))
+      .def("save_elements", &PyTetgenIo::SaveElements, py::arg("fname_base"))
+      .def("save_faces", &PyTetgenIo::SaveFaces, py::arg("fname_base"))
+      .def("save_edges", &PyTetgenIo::SaveEdges, py::arg("fname_base"))
+      .def("save_neighbors", &PyTetgenIo::SaveNeighbors, py::arg("fname_base"))
+      .def("save_poly", &PyTetgenIo::SavePoly, py::arg("fname_base"))
+      .def("save_faces2Smesh",
+           &PyTetgenIo::SaveFaces2Smesh,
+           py::arg("fname_base"));
 }
 
 } // namespace tetgenpy
