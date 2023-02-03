@@ -86,9 +86,7 @@ if __name__ == "__main__":
     # 2. define facets with sequence of coordiantes instead of point ids.
     plc = tetgenpy.PLC()
     plc.add_facets(vertices()[faces()])
-    tetgenout = tetgenpy.tetrahedralize(
-        "qa0.00005", plc.to_tetgenio()
-    )
+    tetgenout = tetgenpy.tetrahedralize("qa0.00005", plc.to_tetgenio())
     gusshow(tetgenout)
 
     # 3. box with a hole using add_facet_with_holes
@@ -118,9 +116,7 @@ if __name__ == "__main__":
         [[9, 11, 15, 13], [13, 15, 14, 12], [12, 14, 10, 8], [8, 10, 11, 9]],
         4,
     )
-    tetgenout = tetgenpy.tetrahedralize(
-        "qa0.00005", plc.to_tetgenio()
-    )
+    tetgenout = tetgenpy.tetrahedralize("qa0.00005", plc.to_tetgenio())
     gusshow(tetgenout)
 
     # 4. long box with "half" hole
@@ -183,7 +179,5 @@ if __name__ == "__main__":
             [0.1, 1.1, 0.1, 20, 0.1],
         ]
     )
-    tetgenout = tetgenpy.tetrahedralize(
-        "Aaq1.1/0", plc.to_tetgenio()
-    )
+    tetgenout = tetgenpy.tetrahedralize("Aaq1.1/0", plc.to_tetgenio())
     gusshow(tetgenout)
