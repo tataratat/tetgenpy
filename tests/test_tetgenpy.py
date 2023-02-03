@@ -138,7 +138,7 @@ class tetgenpyTest(unittest.TestCase):
 
         # call tetrahedralize without any switches
         tetgenout = tetgenpy.tetrahedralize.tetrahedralize(
-            "", plc.to_tetgenio()
+            "Q", plc.to_tetgenio()
         )
 
         has_points_and_tets(tetgenout)
@@ -152,7 +152,7 @@ class tetgenpyTest(unittest.TestCase):
         # call tetrahedralize volume constraints switches (and `q`) to see if
         # facet_ids has propagated
         tetgenout = tetgenpy.tetrahedralize.tetrahedralize(
-            "qa0.005", plc.to_tetgenio()
+            "Qqa0.005", plc.to_tetgenio()
         )
 
         has_points_and_tets(tetgenout)
@@ -189,7 +189,7 @@ class tetgenpyTest(unittest.TestCase):
         plc = tetgenpy.PLC()
         plc.add_facets(vertices()[faces()])
         tetgenout = tetgenpy.tetrahedralize.tetrahedralize(
-            "", plc.to_tetgenio()
+            "Q", plc.to_tetgenio()
         )
 
         has_points_and_tets(tetgenout)
@@ -223,7 +223,7 @@ class tetgenpyTest(unittest.TestCase):
             ],
         )
         tetgenout = tetgenpy.tetrahedralize.tetrahedralize(
-            "", plc.to_tetgenio()
+            "Q", plc.to_tetgenio()
         )
 
         has_points_and_tets(tetgenout)
@@ -241,7 +241,7 @@ class tetgenpyTest(unittest.TestCase):
         plc = boxplc_using_holes()
 
         tetgenout = tetgenpy.tetrahedralize.tetrahedralize(
-            "", plc.to_tetgenio()
+            "Q", plc.to_tetgenio()
         )
 
         has_points_and_tets(tetgenout)
@@ -270,7 +270,7 @@ class tetgenpyTest(unittest.TestCase):
             ]
         )
         tetgenout = tetgenpy.tetrahedralize.tetrahedralize(
-            "", plc.to_tetgenio()
+            "Q", plc.to_tetgenio()
         )
 
         has_points_and_tets(tetgenout)
@@ -306,15 +306,17 @@ class tetgenpyTest(unittest.TestCase):
         )
 
         # [x,y,z,region attribute, volume constraint]
+        r1_attr = 10
+        r2_attr = 20
         plc.add_regions(
             [
-                [0.1, 0.1, 0.1, 10, 0.005],
-                [0.1, 1.1, 0.1, 20, 1],
+                [0.1, 0.1, 0.1, r1_attr, 0.005],
+                [0.1, 1.1, 0.1, r2_attr, 1],
             ]
         )
 
         tetgenout = tetgenpy.tetrahedralize.tetrahedralize(
-            "Aaq", plc.to_tetgenio()
+            "QAaq", plc.to_tetgenio()
         )
 
         has_points_and_tets(tetgenout)
@@ -329,6 +331,27 @@ class tetgenpyTest(unittest.TestCase):
         assert len(first_box_points) > len(
             second_box_points
         ), "add_regions() didn't work."
+
+        # check region attrib
+        assert len(tetgenout.tetrahedronattributes())
+
+        tol = 1e-8
+        r1_tets = tetgenout.tetrahedronattributes() == r1_attr
+        r2_tets = tetgenout.tetrahedronattributes() == r2_attr
+        r1_ps = np.unique(tetgenout.tetrahedra()[r1_tets.ravel()])
+        r2_ps = np.unique(tetgenout.tetrahedra()[r2_tets.ravel()])
+
+        points_in_this_bound(
+            tetgenout.points()[r1_ps],
+            [[0 - tol, 0 - tol, 0 - tol], [1 + tol, 1 + tol, 1 + tol]],
+            all_=True,
+        )
+
+        points_in_this_bound(
+            tetgenout.points()[r2_ps],
+            [[0 - tol, 1 - tol, 0 - tol], [1 + tol, 2 + tol, 1 + tol]],
+            all_=True,
+        )
 
 
 if __name__ == "__main__":
