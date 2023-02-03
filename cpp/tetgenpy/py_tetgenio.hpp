@@ -760,6 +760,37 @@ public:
     return voronoi;
   }
 
+  // load from files
+  void LoadNode(std::string fbase) { Base_::load_node(ToCharPtr(fbase)); }
+
+  void LoadEdge(std::string fbase) { Base_::load_edge(ToCharPtr(fbase)); }
+
+  void LoadFace(std::string fbase) { Base_::load_face(ToCharPtr(fbase)); }
+
+  void LoadTet(std::string fbase) { Base_::load_tet(ToCharPtr(fbase)); }
+
+  void LoadVol(std::string fbase) { Base_::load_vol(ToCharPtr(fbase)); }
+
+  void LoadVar(std::string fbase) { Base_::load_var(ToCharPtr(fbase)); }
+
+  void LoadMtr(std::string fbase) { Base_::load_mtr(ToCharPtr(fbase)); }
+
+  void LoadElem(std::string fbase) { Base_::load_elem(ToCharPtr(fbase)); }
+
+  void LoadPoly(std::string fbase) { Base_::load_poly(ToCharPtr(fbase)); }
+
+  void LoadOff(std::string fbase) { Base_::load_off(ToCharPtr(fbase)); }
+
+  void LoadPly(std::string fbase) { Base_::load_ply(ToCharPtr(fbase)); }
+
+  void LoadStl(std::string fbase) { Base_::load_stl(ToCharPtr(fbase)); }
+
+  void LoadVtk(std::string fbase) { Base_::load_vtk(ToCharPtr(fbase)); }
+
+  void LoadMedit(std::string fbase, bool istetmesh) {
+    Base_::load_medit(ToCharPtr(fbase), (istetmesh) ? 1 : 0);
+  }
+
   // save to files
   void SaveNodes(std::string fbase) { Base_::save_nodes(ToCharPtr(fbase)); }
 
@@ -835,6 +866,23 @@ inline void add_pytetgenio_class(py::module_& m) {
       .def("edgemarkers", &PyTetgenIo::GetEdgeMarkers)
       .def("edge2tets", &PyTetgenIo::GetEdge2Tets)
       .def("voronoi", &PyTetgenIo::GetVoronoi)
+      .def("load_node", &PyTetgenIo::LoadNode, py::arg("fname_base"))
+      .def("load_edge", &PyTetgenIo::LoadEdge, py::arg("fname_base"))
+      .def("load_face", &PyTetgenIo::LoadFace, py::arg("fname_base"))
+      .def("load_tet", &PyTetgenIo::LoadTet, py::arg("fname_base"))
+      .def("load_vol", &PyTetgenIo::LoadVol, py::arg("fname_base"))
+      .def("load_var", &PyTetgenIo::LoadVar, py::arg("fname_base"))
+      .def("load_mtr", &PyTetgenIo::LoadMtr, py::arg("fname_base"))
+      .def("load_elem", &PyTetgenIo::LoadElem, py::arg("fname_base"))
+      .def("load_poly", &PyTetgenIo::LoadPoly, py::arg("fname_base"))
+      .def("load_off", &PyTetgenIo::LoadOff, py::arg("fname_base"))
+      .def("load_ply", &PyTetgenIo::LoadPly, py::arg("fname_base"))
+      .def("load_stl", &PyTetgenIo::LoadStl, py::arg("fname_base"))
+      .def("load_vtk", &PyTetgenIo::LoadVtk, py::arg("fname_base"))
+      .def("load_medit",
+           &PyTetgenIo::LoadMedit,
+           py::arg("fname_base"),
+           py::arg("is_tet_mesh"))
       .def("save_nodes", &PyTetgenIo::SaveNodes, py::arg("fname_base"))
       .def("save_elements", &PyTetgenIo::SaveElements, py::arg("fname_base"))
       .def("save_faces", &PyTetgenIo::SaveFaces, py::arg("fname_base"))
