@@ -390,36 +390,42 @@ public:
     /* numberoffacetconstraints, facetconstaintlist */
     const int f_constraints_size = static_cast<int>(facet_constraints.size());
     if (f_constraints_size > 0) {
-      PrintDebug(debug,
-                 "setting (",
-                 f_constraints_size,
-                 ") facet constraints.");
-      CheckPyArrayShape(facet_constraints, {-1, n_facet_constraint_entries_});
+      PrintDebug(debug, "setting facet constraints.");
 
+      CheckPyArrayShape(facet_constraints, {-1, n_facet_constraint_entries_});
       Base_::numberoffacetconstraints =
           f_constraints_size / n_facet_constraint_entries_;
+      PrintDebug(debug,
+                 "-> set (",
+                 Base_::numberoffacetconstraints,
+                 ") numberoffacetconstraints.");
+
       Base_::facetconstraintlist = new REAL[f_constraints_size];
       std::copy_n(static_cast<REAL*>(facet_constraints.request().ptr),
-                  f_constraints_size * n_facet_constraint_entries_,
+                  f_constraints_size,
                   Base_::facetconstraintlist);
+      PrintDebug(debug, "-> set facetconstraintlist.");
     }
 
     /* numberofsegmentconstraints, segmentconstraintlist */
     const int s_constraints_size = static_cast<int>(segment_constraints.size());
     if (s_constraints_size > 0) {
-      PrintDebug(debug,
-                 "setting (",
-                 s_constraints_size,
-                 ") segment constraints.");
+      PrintDebug(debug, "setting segment constraints.");
+
       CheckPyArrayShape(segment_constraints,
                         {-1, n_segment_constraint_entries_});
-
       Base_::numberofsegmentconstraints =
           s_constraints_size / n_segment_constraint_entries_;
+      PrintDebug(debug,
+                 "-> set (",
+                 Base_::numberofsegmentconstraints,
+                 ") numberofsegmentconstraints.");
+
       Base_::segmentconstraintlist = new REAL[s_constraints_size];
       std::copy_n(static_cast<REAL*>(segment_constraints.request().ptr),
-                  s_constraints_size * n_segment_constraint_entries_,
+                  s_constraints_size,
                   Base_::segmentconstraintlist);
+      PrintDebug(debug, "-> set segmentconstraintlist");
     }
   }
 
