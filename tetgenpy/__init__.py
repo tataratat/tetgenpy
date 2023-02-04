@@ -4,6 +4,7 @@ from tetgenpy import _version, gentet, plc
 from tetgenpy import tetgenpy_core as core
 from tetgenpy.gentet import tetgen_exe, tetrahedralize
 from tetgenpy.plc import PLC
+from tetgenpy.tetgenpy_core import TetgenIO
 
 __version__ = _version.__version__
 
@@ -17,6 +18,7 @@ __all__ = [
     "PLC",
     "tetgen_exe",
     "tetgen",
+    "TetgenIO",
 ]
 
 

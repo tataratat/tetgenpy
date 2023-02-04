@@ -1,4 +1,5 @@
 from tetgenpy import tetgenpy_core as core
+from tetgenpy.plc import PLC
 
 
 def tetgen_exe(argv):
@@ -39,10 +40,41 @@ def tetgen_exe(argv):
             raise err
 
 
+def _to_tetgenio(maybe_plc):
+    """
+    Convert input to TetgenIO: interpretable type for tetrahedralize().
+    """
+    if isinstance(maybe_plc, core.TetgenIO):
+        return maybe_plc
+
+    elif isinstance(maybe_plc, PLC):
+        return maybe_plc.to_tetgenio()
+
+    else:
+        raise TypeError(
+            "inputs for tetraheralize should be either TetgenIO or PLC."
+            f"Given {type(maybe_plc)}"
+        )
+
+
 def tetrahedralize(
     switches, tetgenio_in, additional_points=None, background_mesh=None
 ):
-    """ """
+    """
+    Calls tetrahedralize from the core with appropriate parameters.
+    Input and output is based on TetgenIO.
+
+    Parameters
+    ----------
+    switches: str
+    tetgenio_in: TetgenIO
+    additional_points: TetgenIO
+    background_mesh: TetgenIO
+
+    Returns
+    -------
+    out: TetgenIO
+    """
     out = core.TetgenIO()
 
     # fill dummies
@@ -52,6 +84,13 @@ def tetrahedralize(
     if background_mesh is None:
         background_mesh = core.TetgenIO()
 
+    # type
+    switches = str(switches)
+    tetgenio_in = _to_tetgenio(tetgenio_in)
+    additional_points = _to_tetgenio(additional_points)
+    background_mesh = _to_tetgenio(background_mesh)
+
+    # call
     core.tetrahedralize(
         switches, tetgenio_in, out, additional_points, background_mesh
     )
