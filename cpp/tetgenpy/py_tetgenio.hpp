@@ -86,9 +86,9 @@ public:
   // default ctor initializes. dtor clears.
   PyTetgenIo() { Base_::initialize(); }
   PyTetgenIo(py::array_t<REAL> points,
+             py::list facets,
              py::array_t<REAL> point_attributes,
              py::array_t<REAL> point_metrics,
-             py::list facets,
              py::array_t<int> facet_markers,
              py::list h_facets,
              py::array_t<REAL> holes,
@@ -98,9 +98,9 @@ public:
              bool debug = false) {
     Base_::initialize();
     SetupPlc(points,
+             facets,
              point_attributes,
              point_metrics,
-             facets,
              facet_markers,
              h_facets,
              holes,
@@ -205,9 +205,9 @@ public:
   ///   list of regions.
   ///   coordinate to mark the region, region attribute, max volume
   void SetupPlc(py::array_t<REAL> points,
+                py::list facets,
                 py::array_t<REAL> point_attributes,
                 py::array_t<REAL> point_metrics,
-                py::list facets,
                 py::array_t<int> facet_markers,
                 py::list h_facets,
                 py::array_t<REAL> holes,
@@ -432,9 +432,9 @@ public:
   /// Setup Existing TetMesh, perhaps to refine, perhaps to coarsen,
   /// perhaps as a background mesh.
   void SetupTetMesh(py::array_t<REAL> points,
+                    py::array_t<int> tetrahedra, // (n, 4)
                     py::array_t<REAL> point_attributes,
                     py::array_t<REAL> point_metrics,
-                    py::array_t<int> tetrahedra, // (n, 4)
                     py::array_t<REAL> tetrahedron_attributes,
                     py::array_t<REAL> tetrahedron_constraints, // tetvolumelist
                     py::array_t<int> refine_elements,          // (n, 4)
@@ -833,36 +833,36 @@ inline void add_pytetgenio_class(py::module_& m) {
       .def("setup_points",
            &PyTetgenIo::SetupPoints,
            py::arg("points"),
-           py::arg("point_attributes"),
-           py::arg("point_metrics"),
+           py::arg("point_attributes") = py::array_t<REAL>(),
+           py::arg("point_metrics") = py::array_t<REAL>(),
            py::arg("debug") = false)
       .def("setup_plc",
            &PyTetgenIo::SetupPlc,
            py::arg("points"),
-           py::arg("point_attributes"),
-           py::arg("point_metrics"),
            py::arg("facets"),
-           py::arg("facet_markers"),
-           py::arg("h_facets"),
-           py::arg("holes"),
-           py::arg("regions"),
-           py::arg("facet_constraints"),
-           py::arg("segment_constraints"),
+           py::arg("point_attributes") = py::array_t<REAL>(),
+           py::arg("point_metrics") = py::array_t<REAL>(),
+           py::arg("facet_markers") = py::array_t<int>(),
+           py::arg("h_facets") = py::list(),
+           py::arg("holes") = py::array_t<REAL>(),
+           py::arg("regions") = py::array_t<REAL>(),
+           py::arg("facet_constraints") = py::array_t<REAL>(),
+           py::arg("segment_constraints") = py::array_t<REAL>(),
            py::arg("debug") = false)
       .def("setup_tetmesh",
            &PyTetgenIo::SetupTetMesh,
            py::arg("points"),
-           py::arg("point_attributes"),
-           py::arg("point_metrics"),
            py::arg("tetrahedra"),
-           py::arg("tetrahedron_attributes"),
-           py::arg("tetrahedron_constraints"),
-           py::arg("refine_elements"),
-           py::arg("refine_element_constraints"),
-           py::arg("trifaces"),
-           py::arg("triface_markers"),
-           py::arg("edges"),
-           py::arg("edge_markers"),
+           py::arg("point_attributes") = py::array_t<REAL>(),
+           py::arg("point_metrics") = py::array_t<REAL>(),
+           py::arg("tetrahedron_attributes") = py::array_t<REAL>(),
+           py::arg("tetrahedron_constraints") = py::array_t<REAL>(),
+           py::arg("refine_elements") = py::array_t<int>(),
+           py::arg("refine_element_constraints") = py::array_t<REAL>(),
+           py::arg("trifaces") = py::array_t<int>(),
+           py::arg("triface_markers") = py::array_t<int>(),
+           py::arg("edges") = py::array_t<int>(),
+           py::arg("edge_markers") = py::array_t<int>(),
            py::arg("debug") = false)
       .def("points", &PyTetgenIo::GetPoints)
       .def("tetrahedra", &PyTetgenIo::GetTetrahedra)
