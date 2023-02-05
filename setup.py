@@ -178,7 +178,7 @@ setup(
     ],
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
-        "License :: OSI Approved :: MIT License",
+        "License :: AGPLv3",
         "Programming Language :: Python",
         "Natural Language :: English",
         "Topic :: Scientific/Engineering",
@@ -188,5 +188,5 @@ setup(
     cmdclass=dict(build_ext=CMakeBuild),
     # extras_require={"test": ["pytest>=6.0"]},
     zip_safe=False,
-    license="MIT",
+    license="AGPLv3",
 )
