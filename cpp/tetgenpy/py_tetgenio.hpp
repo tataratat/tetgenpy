@@ -474,6 +474,8 @@ public:
       PrintDebug(debug,
                  "set numberoftetrahedronattributes:",
                  Base_::numberoftetrahedronattributes);
+
+      Base_::tetrahedronattributelist = new REAL[tet_attr_size];
       std::copy_n(static_cast<REAL*>(tetrahedron_attributes.request().ptr),
                   tet_attr_size,
                   Base_::tetrahedronattributelist);
@@ -486,6 +488,7 @@ public:
       CheckPyArrayShape(tetrahedron_constraints,
                         {Base_::numberoftetrahedra, 1});
 
+      Base_::tetrahedronvolumelist = new REAL[tet_vol_size];
       std::copy_n(static_cast<REAL*>(tetrahedron_constraints.request().ptr),
                   tet_vol_size,
                   Base_::tetrahedronvolumelist);
@@ -502,11 +505,13 @@ public:
 
       CheckPyArrayShape(refine_element_constraints,
                         {Base_::numberofrefineelems, 1});
+      Base_::refine_elem_list = new int[refine_elem_size];
       std::copy_n(static_cast<int*>(refine_elements.request().ptr),
                   refine_elem_size,
                   Base_::refine_elem_list);
       PrintDebug(debug, "set refine_elem_list.");
 
+      Base_::refine_elem_vol_list = new REAL[refine_elem_size];
       std::copy_n(static_cast<REAL*>(refine_element_constraints.request().ptr),
                   Base_::numberofrefineelems,
                   Base_::refine_elem_vol_list);
@@ -519,6 +524,7 @@ public:
       CheckPyArrayShape(trifaces, {-1, n_triface_corners_});
       Base_::numberoftrifaces = static_cast<int>(trifaces.shape(0));
       PrintDebug(debug, "set numberoftrifaces:", Base_::numberoftrifaces);
+      Base_::trifacelist = new int[trifaces_size];
       std::copy_n(static_cast<int*>(trifaces.request().ptr),
                   trifaces_size,
                   Base_::trifacelist);
@@ -527,6 +533,7 @@ public:
       const int triface_markers_size = static_cast<int>(triface_markers.size());
       if (triface_markers_size > 0) {
         CheckPyArrayShape(triface_markers, {Base_::numberoftrifaces, 1});
+        Base_::trifacemarkerlist = new int[triface_markers_size];
         std::copy_n(static_cast<int*>(triface_markers.request().ptr),
                     triface_markers_size,
                     Base_::trifacemarkerlist);
@@ -541,6 +548,7 @@ public:
       Base_::numberofedges = static_cast<int>(edges.shape(0));
       PrintDebug(debug, "set numberofedges:", Base_::numberofedges);
 
+      Base_::edgelist = new int[edges_size];
       std::copy_n(static_cast<int*>(edges.request().ptr),
                   edges_size,
                   Base_::edgelist);
@@ -549,6 +557,8 @@ public:
       const int edge_markers_size = static_cast<int>(edge_markers.size());
       if (edge_markers_size > 0) {
         CheckPyArrayShape(edge_markers, {Base_::numberofedges, 1});
+
+        Base_::edgemarkerlist = new int[edge_markers_size];
         std::copy_n(static_cast<int*>(edge_markers.request().ptr),
                     edge_markers_size,
                     Base_::edgemarkerlist);
@@ -673,6 +683,8 @@ public:
   }
 
   // Voronoi point, edges, facets, cells.
+  // currently tetgen.cxx does not parse "v" switch, thus only available with
+  // tetgenbehavior
   py::dict GetVoronoi() {
     //
     py::dict voronoi;
@@ -682,7 +694,7 @@ public:
         CopyFromBase(Base_::numberofvpoints, dim_, Base_::vpointlist);
 
     // vornoi edges
-    py::array_t<int> vedges(Base_::numberofvedges * n_voroedge_corners_);
+    py::array_t<int> vedges({Base_::numberofvedges, n_voroedge_corners_});
     int* vedges_ptr = static_cast<int*>(vedges.request().ptr);
 
     // infinite vertex is not defined.
