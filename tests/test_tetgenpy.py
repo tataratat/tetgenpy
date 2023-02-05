@@ -126,7 +126,7 @@ def boxplc_using_holes():
     return plc
 
 
-class tetgenpyTest(unittest.TestCase):
+class PLCTest(unittest.TestCase):
     """
     test to see if tets are generated with given input.
     """
@@ -338,6 +338,67 @@ class tetgenpyTest(unittest.TestCase):
             [[0 - tol, 1 - tol, 0 - tol], [1 + tol, 2 + tol, 1 + tol]],
             all_=True,
         )
+
+
+class PointsTest(unittest.TestCase):
+    """
+    Pure point input
+    """
+
+    def test_points(self):
+        ti = tetgenpy.TetgenIO()
+        ti.setup_points(vertices(), [], [])
+
+        to = tetgenpy.tetrahedralize("Q", ti)
+
+        has_points_and_tets(to)
+
+    def test_from_plc(self):
+        plc = tetgenpy.PLC()
+        plc.add_points(vertices())
+
+        to = tetgenpy.tetrahedralize("Q", plc.to_tetgenio())
+
+        has_points_and_tets(to)
+
+
+class TetMeshTest(unittest.TestCase):
+    """
+    Starting from tetmesh.
+    """
+
+    def test_refine(self):
+        # get tets first
+        ti = tetgenpy.TetgenIO()
+        ti.setup_points(vertices(), [], [])
+        to = tetgenpy.tetrahedralize("Q", ti)
+
+        in_points = to.points()
+        in_tets = to.tetrahedra()
+
+        # refine
+        ti = tetgenpy.TetgenIO()
+        ti.setup_tetmesh(
+            in_points,
+            [],
+            [],
+            in_tets,
+            [],
+            np.linspace(0.01, 0.09, len(in_tets)).reshape(-1, 1),
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+        )
+
+        to = tetgenpy.tetrahedralize("raQ", ti)
+
+        has_points_and_tets(to)
+
+        # refined output has more tets
+        assert len(in_tets) < len(to.tetrahedra())
 
 
 if __name__ == "__main__":
