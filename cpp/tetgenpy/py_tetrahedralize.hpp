@@ -45,7 +45,7 @@ int Main(py::list sys_argv) {
 
   std::vector<char*> argv_char;
   argv_char.reserve(argc);
-  for (const auto& a_s : argv_string) {
+  for (auto& a_s : argv_string) {
     argv_char.emplace_back(&a_s.front());
   }
 
