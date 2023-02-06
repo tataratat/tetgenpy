@@ -22,8 +22,8 @@ jobs:
     
     - name: Build tetgenpy
       run: |
-        pip install numpy
-        python setup.py develop
+        pip3 install numpy
+        python3 setup.py develop
 
     - name: Test
       run: python3 tests/test_tetgenpy.py
