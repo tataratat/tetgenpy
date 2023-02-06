@@ -1,0 +1,4 @@
+myst_parser
+piccolo-theme
+sphinx
+sphinx-mdinclude
