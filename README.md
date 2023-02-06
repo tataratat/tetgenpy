@@ -56,7 +56,7 @@ print(tetgen_out.tetrahedra())
 print(tetgen_out.trifaces())
 print(tetgen_out.trifacemarkers())
 ```
-This package also provides access to tetgen's executable through:
+This package also provides access to tetgen's binary executable. Try:
 ```bash
 $ tetgen -h
 ```
