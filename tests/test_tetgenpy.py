@@ -381,7 +381,9 @@ class TetMeshTest(unittest.TestCase):
         ti.setup_tetmesh(
             in_points,
             in_tets,
-            tetrahedron_constraints=np.linspace(0.01, 0.09, len(in_tets)).reshape(-1, 1),
+            tetrahedron_constraints=np.linspace(
+                0.01, 0.09, len(in_tets)
+            ).reshape(-1, 1),
         )
 
         to = tetgenpy.tetrahedralize("raQ", ti)
