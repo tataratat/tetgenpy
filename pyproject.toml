@@ -1,0 +1,16 @@
+[build-system]
+requires = [
+    "setuptools>=42",
+    "wheel",
+    "cmake>=3.16",
+]
+
+build-backend = "setuptools.build_meta"
+
+[tool.cibuildwheel]
+test-command = "python3 {project}/tests/test_tetgenpy.py"
+before-build = "rm -rf {project}/build"  # is this necessary?
+
+[tool.cibuildwheel.macos]
+archs = ["x86_64", "arm64"]
+test-skip = ["*arm64"]
