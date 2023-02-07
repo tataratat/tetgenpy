@@ -3,7 +3,12 @@ tetgenpy is a python wrapper for [Hang Si](https://www.wias-berlin.de/people/si/
 It helps to prepare [various types of inputs - points, piecewise linear complexes (PLCs), and tetmesh -](https://wias-berlin.de/software/tetgen/1.5/doc/manual/manual027.png) for tetrahedron mesh generation based on simple python types, such as `list` and `numpy.ndarray`.
 
 ## Install
+```bash
+pip install tetgenpy
 ```
+For current development version,
+```bash
+
 ```
 
 ## Quick Start

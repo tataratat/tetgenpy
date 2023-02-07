@@ -4,7 +4,7 @@ on:
   push
 
 jobs:
-  minimal_explicit_build_and_docs:
+  build_and_docs:
 
     runs-on: ubuntu-latest
 
