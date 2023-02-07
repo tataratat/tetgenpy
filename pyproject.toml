@@ -14,3 +14,6 @@ before-build = "rm -rf {project}/build"  # is this necessary?
 [tool.cibuildwheel.macos]
 archs = ["x86_64", "arm64"]
 test-skip = ["*arm64"]
+
+[tool.cibuildwheel.linux]
+archs = ["x86_64"]
