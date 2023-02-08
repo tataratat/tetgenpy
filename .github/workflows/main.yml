@@ -3,14 +3,13 @@ name: build full and pypi upload
 on:
   push:
     branches: ["main"]
-  pull_request:
 
 jobs:
   wheel_build_full:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [macos-latest, ubuntu-20.04, windows-latest]
 
     steps:
     - uses: actions/checkout@v3
