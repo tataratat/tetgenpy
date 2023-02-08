@@ -17,3 +17,6 @@ test-skip = ["*arm64"]
 
 [tool.cibuildwheel.linux]
 archs = ["x86_64"]
+
+[tool.cibuildwheel.windows]
+skip = "pp*"
