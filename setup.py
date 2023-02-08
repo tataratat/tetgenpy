@@ -165,7 +165,7 @@ setup(
     version=version,
     author="Jaewook Lee",
     author_email="jaewooklee042@gmail.com",
-    description="tetgen python wrapper for points, PLCs and tetmesh inputs.",
+    description="tetgen python wrapper for points, PLCs and tetmesh inputs",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/j042/tetgenpy",
