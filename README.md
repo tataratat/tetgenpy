@@ -8,11 +8,12 @@ pip install tetgenpy
 ```
 For current development version,
 ```bash
-
+pip install git+https://github.com/tataratat/tetgenpy.git@main
 ```
 
 ## Quick Start
 Following is an example for tetrahedralization of a unit cube defined as PLCs.
+Alternatively, you could also use [tetgenpy.PLC](https://tataratat.github.io/tetgenpy/tetgenpy.html#module-tetgenpy.plc) class to prepare `TetgenIO`.
 ```python
 import tetgenpy
 import numpy as np
