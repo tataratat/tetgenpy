@@ -1,4 +1,7 @@
 # tetgenpy
+[![main](https://github.com/tataratat/tetgenpy/actions/workflows/main.yml/badge.svg)](https://github.com/tataratat/tetgenpy/actions/workflows/main.yml)
+[![PyPI version](https://badge.fury.io/py/tetgenpy.svg)](https://badge.fury.io/py/tetgenpy)
+
 tetgenpy is a python wrapper for [Hang Si](https://www.wias-berlin.de/people/si/)'s [TetGen - A Quality Tetrahedral Mesh Generator and a 3D Delaunay Triangulator](https://wias-berlin.de/software/index.jsp?id=TetGen&lang=1).
 It helps to prepare [various types of inputs - points, piecewise linear complexes (PLCs), and tetmesh -](https://wias-berlin.de/software/tetgen/1.5/doc/manual/manual027.png) for tetrahedron mesh generation based on simple python types, such as `list` and `numpy.ndarray`.
 
