@@ -69,3 +69,15 @@ This package also provides access to tetgen's binary executable. Try:
 ```bash
 $ tetgen -h
 ```
+
+## Dependencies
+#### c++
+- [tetgen](https://wias-berlin.de/software/index.jsp?id=TetGen&lang=1)
+- [pybind11](https://github.com/pybind/pybind11)
+#### python
+- [numpy](https://numpy.org)
+#### build
+- [cmake](https://cmake.org)
+- [setuptools](https://setuptools.pypa.io/en/latest/)
+- [wheel](https://wheel.readthedocs.io/en/stable/)
+- [cibuildwheel](https://github.com/pypa/cibuildwheel)
