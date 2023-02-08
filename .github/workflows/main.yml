@@ -1,4 +1,4 @@
-name: build full and pypi upload
+name: main
 
 on:
   push:
