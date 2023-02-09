@@ -39,7 +39,7 @@ int Main(py::list sys_argv) {
   // now sure how casting char* would manage lifetime, so start from string
   std::vector<std::string> argv_string;
   argv_string.reserve(argc);
-  for (auto& s_a : sys_argv) {
+  for (const auto& s_a : sys_argv) {
     argv_string.emplace_back(s_a.cast<std::string>());
   }
 

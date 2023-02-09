@@ -100,7 +100,6 @@ class CMakeBuild(build_ext):
                     pass
 
         else:
-
             # Single config generators are handled "normally"
             single_config = any(
                 x in cmake_generator for x in {"NMake", "Ninja"}
@@ -166,7 +165,7 @@ setup(
     version=version,
     author="Jaewook Lee",
     author_email="jaewooklee042@gmail.com",
-    description="tetgenpy",
+    description="tetgen python wrapper for points, PLCs and tetmesh inputs",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/j042/tetgenpy",
@@ -178,7 +177,7 @@ setup(
     ],
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
-        "License :: AGPLv3",
+        "License :: OSI Approved :: GNU Affero General Public License v3",
         "Programming Language :: Python",
         "Natural Language :: English",
         "Topic :: Scientific/Engineering",
@@ -188,5 +187,4 @@ setup(
     cmdclass=dict(build_ext=CMakeBuild),
     # extras_require={"test": ["pytest>=6.0"]},
     zip_safe=False,
-    license="AGPLv3",
 )

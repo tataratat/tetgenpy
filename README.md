@@ -1,13 +1,22 @@
 # tetgenpy
+[![main](https://github.com/tataratat/tetgenpy/actions/workflows/main.yml/badge.svg)](https://github.com/tataratat/tetgenpy/actions/workflows/main.yml)
+[![PyPI version](https://badge.fury.io/py/tetgenpy.svg)](https://badge.fury.io/py/tetgenpy)
+
 tetgenpy is a python wrapper for [Hang Si](https://www.wias-berlin.de/people/si/)'s [TetGen - A Quality Tetrahedral Mesh Generator and a 3D Delaunay Triangulator](https://wias-berlin.de/software/index.jsp?id=TetGen&lang=1).
 It helps to prepare [various types of inputs - points, piecewise linear complexes (PLCs), and tetmesh -](https://wias-berlin.de/software/tetgen/1.5/doc/manual/manual027.png) for tetrahedron mesh generation based on simple python types, such as `list` and `numpy.ndarray`.
 
 ## Install
+```bash
+pip install tetgenpy
 ```
+For current development version,
+```bash
+pip install git+https://github.com/tataratat/tetgenpy.git@main
 ```
 
 ## Quick Start
 Following is an example for tetrahedralization of a unit cube defined as PLCs.
+Alternatively, you could also use [tetgenpy.PLC](https://tataratat.github.io/tetgenpy/tetgenpy.html#module-tetgenpy.plc) class to prepare `TetgenIO`.
 ```python
 import tetgenpy
 import numpy as np
@@ -60,3 +69,15 @@ This package also provides access to tetgen's binary executable. Try:
 ```bash
 $ tetgen -h
 ```
+
+## Dependencies
+#### c++
+- [tetgen](https://wias-berlin.de/software/index.jsp?id=TetGen&lang=1)
+- [pybind11](https://github.com/pybind/pybind11)
+#### python
+- [numpy](https://numpy.org)
+#### build
+- [cmake](https://cmake.org)
+- [setuptools](https://setuptools.pypa.io/en/latest/)
+- [wheel](https://wheel.readthedocs.io/en/stable/)
+- [cibuildwheel](https://github.com/pypa/cibuildwheel)

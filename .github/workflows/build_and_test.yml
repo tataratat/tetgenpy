@@ -1,0 +1,29 @@
+name: install and test
+
+on:
+  pull_request
+
+jobs:
+  build_and_test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10", "3.11"]
+        os: [macos-latest, ubuntu-20.04, windows-latest]
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version}}
+
+    - name: Build tetgenpy
+      run: |
+        pip3 install numpy
+        python3 setup.py develop
+
+    - name: Test
+      run: python3 tests/test_tetgenpy.py

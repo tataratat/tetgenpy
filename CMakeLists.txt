@@ -13,9 +13,15 @@ set(project_config "${gen_dir}/${PROJECT_NAME}Config.cmake")
 set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
 set(namespace "${PROJECT_NAME}::")
 
-# sources
-set(TETGENPY_FLAGS -fPIC)
-set(TETGENPY_OPTIMIZATION_FLAGS $<$<NOT:$<CONFIG:Debug>>:-O3>)
+# flags / defs
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  set(TETGENPY_FLAGS -fPIC)
+  set(TETGENPY_OPTIMIZATION_FLAGS $<$<NOT:$<CONFIG:Debug>>:-O3>)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+  set(TETGENPY_FLAGS)
+  set(TETGENPY_OPTIMIZATION_FLAGS $<$<NOT:$<CONFIG:Debug>>:/O2>)
+endif()
+
 set(TETGENPY_DEFS)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)

@@ -9,7 +9,7 @@ tetgenpy
 Sources
 ============
 .. toctree::
-   Github <https://github.com/tataratat/splinepy>
+   Github <https://github.com/tataratat/tetgenpy>
 
 Contributing
 ===============
