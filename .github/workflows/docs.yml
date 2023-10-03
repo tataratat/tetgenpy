@@ -21,7 +21,7 @@ jobs:
       run: pip install numpy
 
     - name: build tetgenpy
-      run: CC=clang-12 CXX=clang++-12 python3 setup.py develop
+      run: CC=clang-14 CXX=clang++-14 python3 setup.py develop
 
     - name: test
       run: python3 tests/test_tetgenpy.py
