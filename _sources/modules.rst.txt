@@ -1,0 +1,7 @@
+tetgenpy
+========
+
+.. toctree::
+   :maxdepth: 4
+
+   tetgenpy

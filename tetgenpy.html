@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>tetgenpy &#8212; tetgenpy 0.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/basic_mod.css?v=94a554c0" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
+    <script src="_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <script src="_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="tetgenpy" href="modules.html" />
+    <link href="_static/style.css" rel="stylesheet" type="text/css">
+
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="index.html" title="Go to homepage">tetgenpy 0.0.1 documentation</a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/tataratat/tetgenpy">Github</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contiributing</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API references</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">tetgenpy</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="tetgenpy">
+<h1>tetgenpy<a class="headerlink" href="#tetgenpy" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<section id="module-tetgenpy.gentet">
+<span id="tetgenpy-gentet"></span><h2>tetgenpy.gentet<a class="headerlink" href="#module-tetgenpy.gentet" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="tetgenpy.gentet.tetgen_exe">
+<span class="sig-prename descclassname"><span class="pre">tetgenpy.gentet.</span></span><span class="sig-name descname"><span class="pre">tetgen_exe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argv</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tetgenpy/gentet.html#tetgen_exe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tetgenpy.gentet.tetgen_exe" title="Link to this definition">¶</a></dt>
+<dd><p>Calls tetgen executable with argv as a list.
+This call performs the same routine as tetgen’s main().
+The first element of argv is usually the executable name and tetgen also
+expects that. However, this can be a dummy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>argv</strong> (<em>list</em>) – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>exit_code</strong> – Will retun 0 if everything went well. -1 with RuntimeError without
+any informative error message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tetgenpy.gentet.tetrahedralize">
+<span class="sig-prename descclassname"><span class="pre">tetgenpy.gentet.</span></span><span class="sig-name descname"><span class="pre">tetrahedralize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">switches</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tetgenio_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_mesh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tetgenpy/gentet.html#tetrahedralize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tetgenpy.gentet.tetrahedralize" title="Link to this definition">¶</a></dt>
+<dd><p>Calls tetrahedralize from the core with appropriate parameters.
+Input and output is based on TetgenIO.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>switches</strong> (<em>str</em>) – </p></li>
+<li><p><strong>tetgenio_in</strong> (<a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><em>TetgenIO</em></a>) – </p></li>
+<li><p><strong>additional_points</strong> (<a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><em>TetgenIO</em></a>) – </p></li>
+<li><p><strong>background_mesh</strong> (<a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><em>TetgenIO</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>out</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO">TetgenIO</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-tetgenpy.plc">
+<span id="tetgenpy-plc"></span><h2>tetgenpy.plc<a class="headerlink" href="#module-tetgenpy.plc" title="Link to this heading">¶</a></h2>
+<p>Class to prepare input Piecewise Linear Complexes for tetgen.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="tetgenpy.plc.PLC">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tetgenpy.plc.</span></span><span class="sig-name descname"><span class="pre">PLC</span></span><a class="reference internal" href="_modules/tetgenpy/plc.html#PLC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tetgenpy.plc.PLC" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.plc.PLC.add_facet_with_holes">
+<span class="sig-name descname"><span class="pre">add_facet_with_holes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">polygons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">holes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coordinates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_constraint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tetgenpy/plc.html#PLC.add_facet_with_holes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tetgenpy.plc.PLC.add_facet_with_holes" title="Link to this definition">¶</a></dt>
+<dd><p>Supports full features of tetgenio::facet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>polygons</strong> (<em>array-like</em>) – same as add_facets</p></li>
+<li><p><strong>holes</strong> (<em>array-like</em>) – list of locations to poke holes in this facet. If you don’t want
+holes, you can set it to None.</p></li>
+<li><p><strong>facet_id</strong> (<em>int</em>) – </p></li>
+<li><p><strong>coordinates</strong> (<em>bool</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.plc.PLC.add_facets">
+<span class="sig-name descname"><span class="pre">add_facets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">polygons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_constraints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coordinates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tetgenpy/plc.html#PLC.add_facets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tetgenpy.plc.PLC.add_facets" title="Link to this definition">¶</a></dt>
+<dd><p>Adds facets with one polygon per facet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>polygons</strong> (<em>array-like</em>) – list of polygons by coordinate or indices referring to points list.
+coordinates are expected to have [[[x1_1, y1_2, z1_3], …], …]
+and indices [[p1_1, p1_2, …], … ].</p></li>
+<li><p><strong>facet_id</strong> (<em>int</em>) – value used to set facetmarker. Default is -123454321.
+can be also interpreted as boundary id as all the output faces on
+this facet will have this id.</p></li>
+<li><p><strong>facet_constraints</strong> (<em>float</em><em> or </em><em>list</em>) – max area for given facets. If it is list,
+len(facet_constraints) == len(polygons) should hold.</p></li>
+<li><p><strong>coordinates</strong> (<em>bool</em>) – Default is None. Can specify if given polygons are coordinate or
+index based. If None, will check the first entry and determine.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.plc.PLC.add_holes">
+<span class="sig-name descname"><span class="pre">add_holes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">holes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tetgenpy/plc.html#PLC.add_holes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tetgenpy.plc.PLC.add_holes" title="Link to this definition">¶</a></dt>
+<dd><p>Adds locations to poke holes. This hole propagates to the nearest
+edges of surrounding facets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>holes</strong> (<em>(</em><em>n</em><em>, </em><em>3</em><em>) </em><em>array-like</em>) – places to poke holes</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.plc.PLC.add_points">
+<span class="sig-name descname"><span class="pre">add_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tetgenpy/plc.html#PLC.add_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tetgenpy.plc.PLC.add_points" title="Link to this definition">¶</a></dt>
+<dd><p>Adds points. list, tuple, or np.ndarray.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>points</strong> (<em>(</em><em>n</em><em>, </em><em>3</em><em>)  </em><em>array-like</em>) – </p></li>
+<li><p><strong>point_attributes</strong> (<em>float</em><em> or </em><em>(</em><em>n</em><em>, </em><em>m</em><em>) </em><em>array-like</em>) – </p></li>
+<li><p><strong>point_metrics</strong> (<em>float</em><em> or </em><em>(</em><em>n</em><em>, </em><em>1</em><em>) </em><em>array-like</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.plc.PLC.add_regions">
+<span class="sig-name descname"><span class="pre">add_regions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tetgenpy/plc.html#PLC.add_regions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tetgenpy.plc.PLC.add_regions" title="Link to this definition">¶</a></dt>
+<dd><p>Mark regions, their attributes, and their maximum volumes.
+Each region has 5 entries - x,y,z coordinate, (int) attribute, (float)
+maximum tetrahedron volume for this region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>regions</strong> (<em>(</em><em>n</em><em>, </em><em>5</em><em>) </em><em>np.ndarray</em>) – [[x1, y1, z1, attribute, max_volume], …]</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.plc.PLC.add_segment_constraints">
+<span class="sig-name descname"><span class="pre">add_segment_constraints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constraint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tetgenpy/plc.html#PLC.add_segment_constraints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tetgenpy.plc.PLC.add_segment_constraints" title="Link to this definition">¶</a></dt>
+<dd><p>Add segment constraints.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>segments</strong> (<em>array-like</em>) – </p></li>
+<li><p><strong>constraint</strong> (<em>float</em><em> or </em><em>array-like</em>) – If array-like, should have same len as segments</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.plc.PLC.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tetgenpy/plc.html#PLC.show"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tetgenpy.plc.PLC.show" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.plc.PLC.sofarsogood">
+<span class="sig-name descname"><span class="pre">sofarsogood</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tetgenpy/plc.html#PLC.sofarsogood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tetgenpy.plc.PLC.sofarsogood" title="Link to this definition">¶</a></dt>
+<dd><p>assert for sanity check</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.plc.PLC.to_tetgenio">
+<span class="sig-name descname"><span class="pre">to_tetgenio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tetgenpy/plc.html#PLC.to_tetgenio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tetgenpy.plc.PLC.to_tetgenio" title="Link to this definition">¶</a></dt>
+<dd><p>Creates tetgenio based on current properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>as_dict</strong> (<em>bool</em>) – return dict instead of TetgenIO object</p></li>
+<li><p><strong>debug</strong> (<em>bool</em>) – prints debug messages from cpp side.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-tetgenpy.tetgenpy_core">
+<span id="tetgenpy-tetgenpy-core"></span><h2>tetgenpy.tetgenpy_core<a class="headerlink" href="#module-tetgenpy.tetgenpy_core" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tetgenpy.tetgenpy_core.</span></span><span class="sig-name descname"><span class="pre">TetgenIO</span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.edge2tets">
+<span class="sig-name descname"><span class="pre">edge2tets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.edge2tets" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.edgemarkers">
+<span class="sig-name descname"><span class="pre">edgemarkers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.edgemarkers" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.edges">
+<span class="sig-name descname"><span class="pre">edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.edges" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.face2edges">
+<span class="sig-name descname"><span class="pre">face2edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.face2edges" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.face2tets">
+<span class="sig-name descname"><span class="pre">face2tets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.face2tets" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.load_edge">
+<span class="sig-name descname"><span class="pre">load_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.load_edge" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.load_elem">
+<span class="sig-name descname"><span class="pre">load_elem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.load_elem" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.load_face">
+<span class="sig-name descname"><span class="pre">load_face</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.load_face" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.load_medit">
+<span class="sig-name descname"><span class="pre">load_medit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_tet_mesh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.load_medit" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.load_mtr">
+<span class="sig-name descname"><span class="pre">load_mtr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.load_mtr" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.load_node">
+<span class="sig-name descname"><span class="pre">load_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.load_node" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.load_off">
+<span class="sig-name descname"><span class="pre">load_off</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.load_off" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.load_ply">
+<span class="sig-name descname"><span class="pre">load_ply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.load_ply" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.load_poly">
+<span class="sig-name descname"><span class="pre">load_poly</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.load_poly" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.load_stl">
+<span class="sig-name descname"><span class="pre">load_stl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.load_stl" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.load_tet">
+<span class="sig-name descname"><span class="pre">load_tet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.load_tet" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.load_var">
+<span class="sig-name descname"><span class="pre">load_var</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.load_var" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.load_vol">
+<span class="sig-name descname"><span class="pre">load_vol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.load_vol" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.load_vtk">
+<span class="sig-name descname"><span class="pre">load_vtk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.load_vtk" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.neighbors">
+<span class="sig-name descname"><span class="pre">neighbors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.neighbors" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.points">
+<span class="sig-name descname"><span class="pre">points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.points" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.save_edges">
+<span class="sig-name descname"><span class="pre">save_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.save_edges" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.save_elements">
+<span class="sig-name descname"><span class="pre">save_elements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.save_elements" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.save_faces">
+<span class="sig-name descname"><span class="pre">save_faces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.save_faces" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.save_faces2Smesh">
+<span class="sig-name descname"><span class="pre">save_faces2Smesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.save_faces2Smesh" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.save_neighbors">
+<span class="sig-name descname"><span class="pre">save_neighbors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.save_neighbors" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.save_nodes">
+<span class="sig-name descname"><span class="pre">save_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.save_nodes" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.save_poly">
+<span class="sig-name descname"><span class="pre">save_poly</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.save_poly" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.setup_plc">
+<span class="sig-name descname"><span class="pre">setup_plc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_markers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=int32)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_facets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">holes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_constraints</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment_constraints</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.setup_plc" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.setup_points">
+<span class="sig-name descname"><span class="pre">setup_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.setup_points" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.setup_tetmesh">
+<span class="sig-name descname"><span class="pre">setup_tetmesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tetrahedra</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tetrahedron_attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tetrahedron_constraints</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refine_elements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=int32)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refine_element_constraints</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trifaces</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=int32)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">triface_markers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=int32)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=int32)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_markers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=int32)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.setup_tetmesh" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.tet2edges">
+<span class="sig-name descname"><span class="pre">tet2edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.tet2edges" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.tet2faces">
+<span class="sig-name descname"><span class="pre">tet2faces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.tet2faces" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.tetrahedra">
+<span class="sig-name descname"><span class="pre">tetrahedra</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.tetrahedra" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.tetrahedronattributes">
+<span class="sig-name descname"><span class="pre">tetrahedronattributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.tetrahedronattributes" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.trifacemarkers">
+<span class="sig-name descname"><span class="pre">trifacemarkers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.trifacemarkers" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.trifaces">
+<span class="sig-name descname"><span class="pre">trifaces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.int32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.trifaces" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.TetgenIO.voronoi">
+<span class="sig-name descname"><span class="pre">voronoi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.TetgenIO.voronoi" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.main">
+<span class="sig-prename descclassname"><span class="pre">tetgenpy.tetgenpy_core.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tetgenpy.tetgenpy_core.tetrahedralize">
+<span class="sig-prename descclassname"><span class="pre">tetgenpy.tetgenpy_core.</span></span><span class="sig-name descname"><span class="pre">tetrahedralize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg4</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO" title="tetgenpy.tetgenpy_core.TetgenIO"><span class="pre">tetgenpy.tetgenpy_core.TetgenIO</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#tetgenpy.tetgenpy_core.tetrahedralize" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents<span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:<span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">tetgenpy</a><ul>
+<li><a class="reference internal" href="#module-tetgenpy.gentet">tetgenpy.gentet</a><ul>
+<li><a class="reference internal" href="#tetgenpy.gentet.tetgen_exe"><code class="docutils literal notranslate"><span class="pre">tetgen_exe()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.gentet.tetrahedralize"><code class="docutils literal notranslate"><span class="pre">tetrahedralize()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-tetgenpy.plc">tetgenpy.plc</a><ul>
+<li><a class="reference internal" href="#tetgenpy.plc.PLC"><code class="docutils literal notranslate"><span class="pre">PLC</span></code></a><ul>
+<li><a class="reference internal" href="#tetgenpy.plc.PLC.add_facet_with_holes"><code class="docutils literal notranslate"><span class="pre">PLC.add_facet_with_holes()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.plc.PLC.add_facets"><code class="docutils literal notranslate"><span class="pre">PLC.add_facets()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.plc.PLC.add_holes"><code class="docutils literal notranslate"><span class="pre">PLC.add_holes()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.plc.PLC.add_points"><code class="docutils literal notranslate"><span class="pre">PLC.add_points()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.plc.PLC.add_regions"><code class="docutils literal notranslate"><span class="pre">PLC.add_regions()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.plc.PLC.add_segment_constraints"><code class="docutils literal notranslate"><span class="pre">PLC.add_segment_constraints()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.plc.PLC.show"><code class="docutils literal notranslate"><span class="pre">PLC.show()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.plc.PLC.sofarsogood"><code class="docutils literal notranslate"><span class="pre">PLC.sofarsogood()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.plc.PLC.to_tetgenio"><code class="docutils literal notranslate"><span class="pre">PLC.to_tetgenio()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-tetgenpy.tetgenpy_core">tetgenpy.tetgenpy_core</a><ul>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO"><code class="docutils literal notranslate"><span class="pre">TetgenIO</span></code></a><ul>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.edge2tets"><code class="docutils literal notranslate"><span class="pre">TetgenIO.edge2tets()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.edgemarkers"><code class="docutils literal notranslate"><span class="pre">TetgenIO.edgemarkers()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.edges"><code class="docutils literal notranslate"><span class="pre">TetgenIO.edges()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.face2edges"><code class="docutils literal notranslate"><span class="pre">TetgenIO.face2edges()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.face2tets"><code class="docutils literal notranslate"><span class="pre">TetgenIO.face2tets()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.load_edge"><code class="docutils literal notranslate"><span class="pre">TetgenIO.load_edge()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.load_elem"><code class="docutils literal notranslate"><span class="pre">TetgenIO.load_elem()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.load_face"><code class="docutils literal notranslate"><span class="pre">TetgenIO.load_face()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.load_medit"><code class="docutils literal notranslate"><span class="pre">TetgenIO.load_medit()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.load_mtr"><code class="docutils literal notranslate"><span class="pre">TetgenIO.load_mtr()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.load_node"><code class="docutils literal notranslate"><span class="pre">TetgenIO.load_node()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.load_off"><code class="docutils literal notranslate"><span class="pre">TetgenIO.load_off()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.load_ply"><code class="docutils literal notranslate"><span class="pre">TetgenIO.load_ply()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.load_poly"><code class="docutils literal notranslate"><span class="pre">TetgenIO.load_poly()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.load_stl"><code class="docutils literal notranslate"><span class="pre">TetgenIO.load_stl()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.load_tet"><code class="docutils literal notranslate"><span class="pre">TetgenIO.load_tet()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.load_var"><code class="docutils literal notranslate"><span class="pre">TetgenIO.load_var()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.load_vol"><code class="docutils literal notranslate"><span class="pre">TetgenIO.load_vol()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.load_vtk"><code class="docutils literal notranslate"><span class="pre">TetgenIO.load_vtk()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.neighbors"><code class="docutils literal notranslate"><span class="pre">TetgenIO.neighbors()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.points"><code class="docutils literal notranslate"><span class="pre">TetgenIO.points()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.save_edges"><code class="docutils literal notranslate"><span class="pre">TetgenIO.save_edges()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.save_elements"><code class="docutils literal notranslate"><span class="pre">TetgenIO.save_elements()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.save_faces"><code class="docutils literal notranslate"><span class="pre">TetgenIO.save_faces()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.save_faces2Smesh"><code class="docutils literal notranslate"><span class="pre">TetgenIO.save_faces2Smesh()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.save_neighbors"><code class="docutils literal notranslate"><span class="pre">TetgenIO.save_neighbors()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.save_nodes"><code class="docutils literal notranslate"><span class="pre">TetgenIO.save_nodes()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.save_poly"><code class="docutils literal notranslate"><span class="pre">TetgenIO.save_poly()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.setup_plc"><code class="docutils literal notranslate"><span class="pre">TetgenIO.setup_plc()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.setup_points"><code class="docutils literal notranslate"><span class="pre">TetgenIO.setup_points()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.setup_tetmesh"><code class="docutils literal notranslate"><span class="pre">TetgenIO.setup_tetmesh()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.tet2edges"><code class="docutils literal notranslate"><span class="pre">TetgenIO.tet2edges()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.tet2faces"><code class="docutils literal notranslate"><span class="pre">TetgenIO.tet2faces()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.tetrahedra"><code class="docutils literal notranslate"><span class="pre">TetgenIO.tetrahedra()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.tetrahedronattributes"><code class="docutils literal notranslate"><span class="pre">TetgenIO.tetrahedronattributes()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.trifacemarkers"><code class="docutils literal notranslate"><span class="pre">TetgenIO.trifacemarkers()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.trifaces"><code class="docutils literal notranslate"><span class="pre">TetgenIO.trifaces()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.TetgenIO.voronoi"><code class="docutils literal notranslate"><span class="pre">TetgenIO.voronoi()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li><a class="reference internal" href="#tetgenpy.tetgenpy_core.tetrahedralize"><code class="docutils literal notranslate"><span class="pre">tetrahedralize()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="modules.html">
+                    <span class="icon">&lt;</span><span>tetgenpy</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Jaewook Lee.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

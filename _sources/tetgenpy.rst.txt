@@ -1,0 +1,36 @@
+
+tetgenpy
+========
+
+
+.. toctree::
+   :maxdepth: 4
+
+
+
+
+tetgenpy.gentet
+---------------
+
+.. automodule:: tetgenpy.gentet
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+tetgenpy.plc
+------------
+
+.. automodule:: tetgenpy.plc
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+tetgenpy.tetgenpy\_core
+-----------------------
+
+.. automodule:: tetgenpy.tetgenpy_core
+   :members:
+   :undoc-members:
+   :show-inheritance:
