@@ -1,6 +1,7 @@
 """
 Class to prepare input Piecewise Linear Complexes for tetgen.
 """
+
 import numpy as np
 
 from tetgenpy import tetgenpy_core as core
