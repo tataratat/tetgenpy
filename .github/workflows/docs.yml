@@ -17,9 +17,6 @@ jobs:
       with:
         python-version: "3.11"
 
-    - name: install dependencies
-      run: pip install numpy
-
     - name: build tetgenpy
       run: pip install -e .
 

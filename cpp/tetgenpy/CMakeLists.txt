@@ -25,3 +25,8 @@ install(
   DESTINATION ${incl_dest}
   FILES_MATCHING
   PATTERN "*.hpp")
+
+install(
+  TARGETS tetgenpy_core
+  DESTINATION tetgenpy
+  COMPONENT PythonModule)
