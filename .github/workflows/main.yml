@@ -17,15 +17,14 @@ jobs:
             cw_build: "pp*"
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
     - name: build wheels
-      uses: pypa/cibuildwheel@v2.13.1
+      uses: pypa/cibuildwheel@v2.22
       env:
         CIBW_ARCHS: ${{ matrix.arch }}
         CIBW_BUILD: ${{ matrix.cw_build }}
-        CIBW_TEST_SKIP: "*-macosx_arm64"
 
     - uses: actions/upload-artifact@v3
       with:
@@ -41,11 +40,11 @@ jobs:
 
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
     - name: build wheels
-      uses: pypa/cibuildwheel@v2.13.1
+      uses: pypa/cibuildwheel@v2.22
       env:
         CIBW_ARCHS: ${{ matrix.arch }}
         CIBW_BUILD: ${{ matrix.cw_build }}
@@ -60,17 +59,13 @@ jobs:
     strategy:
       matrix:
         arch: [aarch64, ppc64le]
-        cw_build: ["cp36*many*", "cp37*many*", "cp38*many*", "cp39*many*", "cp310*many*", "cp311*many*", "pp37*many*", "pp38*many*", "pp39*many*"]
+        cw_build: ["cp*many*", "pp*many*"]
         exclude:
           - arch: ppc64le
-            cw_build: "pp37*many*"
-          - arch: ppc64le
-            cw_build: "pp38*many*"
-          - arch: ppc64le
-            cw_build: "pp39*many*"
+            cw_build: "pp*many*"
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
 
@@ -81,7 +76,7 @@ jobs:
         platforms: arm64, ppc64le
 
     - name: build wheels
-      uses: pypa/cibuildwheel@v2.13.1
+      uses: pypa/cibuildwheel@v2.22
       env:
         CIBW_ARCHS: ${{ matrix.arch }}
         CIBW_BUILD: ${{ matrix.cw_build }}
@@ -100,11 +95,11 @@ jobs:
         arch: [x86, AMD64]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
     - name: build wheels
-      uses: pypa/cibuildwheel@v2.16.2
+      uses: pypa/cibuildwheel@v2.22
       env:
         CIBW_ARCHS: ${{ matrix.arch }}
 
@@ -117,7 +112,7 @@ jobs:
   source_dist:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
 

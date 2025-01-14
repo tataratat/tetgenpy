@@ -1,4 +1,6 @@
 # tetgenpy
+<p align="center"><img src="https://github.com/tataratat/tetgenpy/raw/main/docs/source/_static/tetgenpy.png" width="50%" title="tet"></p>
+
 [![main](https://github.com/tataratat/tetgenpy/actions/workflows/main.yml/badge.svg)](https://github.com/tataratat/tetgenpy/actions/workflows/main.yml)
 [![PyPI version](https://badge.fury.io/py/tetgenpy.svg)](https://badge.fury.io/py/tetgenpy)
 
@@ -70,14 +72,14 @@ This package also provides access to tetgen's binary executable. Try:
 $ tetgen -h
 ```
 
-## Dependencies
-#### c++
-- [tetgen](https://wias-berlin.de/software/index.jsp?id=TetGen&lang=1)
-- [pybind11](https://github.com/pybind/pybind11)
-#### python
-- [numpy](https://numpy.org)
-#### build
-- [cmake](https://cmake.org)
-- [setuptools](https://setuptools.pypa.io/en/latest/)
-- [wheel](https://wheel.readthedocs.io/en/stable/)
-- [cibuildwheel](https://github.com/pypa/cibuildwheel)
+## Working with `vedo`
+[vedo](https://vedo.embl.es) natively supports `tetgenpy.TetgenIO` types starting with version `>=2023.5.1`.
+It is ___A python module for scientific analysis and visualization of эd objects___ that can be used to enhance further workflows.
+You can find an example (same as above) [here](https://github.com/marcomusy/vedo/blob/master/examples/other/tetgen1.py) or simply try:
+```bash
+pip install vedo
+vedo -r tetgen1
+```
+
+## Contributing
+Write an [issue](https://github.com/tataratat/tetgenpy/issues) or create a pull request! A simple guideline can be found at [CONTRIBUTING.md](https://github.com/tataratat/tetgenpy/blob/main/CONTRIBUTING.md)

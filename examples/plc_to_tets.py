@@ -83,7 +83,7 @@ if __name__ == "__main__":
     tetgenout = tetgenpy.tetrahedralize("", plc.to_tetgenio())
     gusshow(tetgenout)
 
-    # 2. define facets with sequence of coordiantes instead of point ids.
+    # 2. define facets with sequence of coordinates instead of point ids.
     plc = tetgenpy.PLC()
     plc.add_facets(vertices()[faces()])
     tetgenout = tetgenpy.tetrahedralize("qa0.00005", plc.to_tetgenio())

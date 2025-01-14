@@ -9,19 +9,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
     - name: Set up  python
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5
       with:
-        python-version: 3.9
-
-    - name: install dependencies
-      run: pip install numpy
+        python-version: "3.11"
 
     - name: build tetgenpy
-      run: CC=clang-14 CXX=clang++-14 python3 setup.py develop
+      run: pip install -e .
 
     - name: test
       run: python3 tests/test_tetgenpy.py
@@ -29,7 +26,6 @@ jobs:
     - name: build docs
       run: |
         pip install -r ./docs/requirements.txt
-        sphinx-apidoc -f -t docs/source/_templates -o docs/source tetgenpy
         sphinx-build -W -b html docs/source docs/build
 
     - name: deploy docs only if it is pushed to main

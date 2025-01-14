@@ -57,6 +57,6 @@ inline void PrintAndThrowError(Args&&... args) {
   std::cout << "TETGENPY ERROR - ";
   Print(std::forward<Args>(args)...);
   std::cout << "\n";
-  throw std::runtime_error("Error Occured! Abort the mission!");
+  throw std::runtime_error("Error Occurred! Abort the mission!");
 }
 } // namespace tetgenpy
