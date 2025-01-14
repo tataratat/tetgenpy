@@ -1,0 +1,36 @@
+﻿.. _tetgenpy:
+
+tetgenpy
+========
+
+.. automodule:: tetgenpy
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :template:
+   :recursive:
+
+   tetgenpy_core
+   gentet
+   plc
+

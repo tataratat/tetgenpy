@@ -1,0 +1,6 @@
+tetgenpy.tetgenpy\_core.main
+============================
+
+.. currentmodule:: tetgenpy.tetgenpy_core
+
+.. autofunction:: main
