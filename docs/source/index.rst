@@ -1,29 +1,14 @@
-tetgenpy
-==================================
-
 .. toctree::
    :maxdepth: 2
 
 .. mdinclude:: ../../README.md
 
-Sources
-============
+Table of Contents
+-----------------
 .. toctree::
    Github <https://github.com/tataratat/tetgenpy>
-
-Contributing
-===============
-.. toctree::
-   :maxdepth: 1
-
    Contiributing <CONTRIBUTING>
-
-Library
-============
-.. toctree::
-   :maxdepth: 1
-
-   API references <modules>
+   API references <api_reference>
 
 .. Indices and tables
 .. ==================

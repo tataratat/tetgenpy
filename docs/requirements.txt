@@ -1,4 +1,4 @@
 myst_parser
-piccolo-theme
+pydata-sphinx-theme
 sphinx
 sphinx-mdinclude
