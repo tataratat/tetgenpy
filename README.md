@@ -82,4 +82,4 @@ vedo -r tetgen1
 ```
 
 ## Contributing
-Write an [issue](https://github.com/tataratat/tetgenpy/issues) or create a pull request! A simple guideline can be found [here](https://github.com/tataratat/tetgenpy/blob/main/CONTRIBUTING.md)
+Write an [issue](https://github.com/tataratat/tetgenpy/issues) or create a pull request! A simple guideline can be found at [CONTRIBUTING.md](https://github.com/tataratat/tetgenpy/blob/main/CONTRIBUTING.md)
