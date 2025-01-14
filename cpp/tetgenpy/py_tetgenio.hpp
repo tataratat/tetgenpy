@@ -571,8 +571,7 @@ public:
   template<typename DataType>
   py::array_t<DataType> CopyFromBase(const int base_data_count,
                                      const int base_data_stride,
-                                     const DataType* base_array_ptr,
-                                     std::vector<int> output_array_size = {}) {
+                                     const DataType* base_array_ptr) {
 
     // return if zero
     if (base_data_count == 0 || base_array_ptr == (DataType*) NULL) {
@@ -580,19 +579,11 @@ public:
     }
 
     const int base_array_len = base_data_count * base_data_stride;
-    py::array_t<DataType> output_array(base_array_len);
+    py::array_t<DataType> output_array({base_data_count, base_data_stride});
     std::copy_n(base_array_ptr,
                 base_array_len,
                 static_cast<DataType*>(output_array.request().ptr));
 
-    // resize output if size input satisfies one of the following
-    if (output_array_size.size() != 0 && output_array_size[0] > 0) {
-      // 1. specified entries with first entries positive -> direct use
-      output_array.resize(output_array_size);
-    } else if (output_array_size.size() == 0) {
-      // 2. nothing specified -> try to resize based on count and size
-      output_array.resize({base_data_count, base_data_stride});
-    }
     return output_array;
   }
 
