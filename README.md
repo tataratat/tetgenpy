@@ -1,4 +1,6 @@
 # tetgenpy
+<p align="center"><img src="https://github.com/tataratat/tetgenpy/raw/main/docs/source/_static/tetgenpy.png" width="50%" title="tet"></p>
+
 [![main](https://github.com/tataratat/tetgenpy/actions/workflows/main.yml/badge.svg)](https://github.com/tataratat/tetgenpy/actions/workflows/main.yml)
 [![PyPI version](https://badge.fury.io/py/tetgenpy.svg)](https://badge.fury.io/py/tetgenpy)
 
