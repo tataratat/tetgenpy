@@ -450,9 +450,8 @@ class PLC:
 
         # must be c contiguous
         for key, value in pytetio.items():
-            if isinstance(value, np.ndarray):
-                if not value.flags.c_contiguous:
-                    pytetio[key] = np.ascontiguousarray(value)
+            if isinstance(value, np.ndarray) and not value.flags.c_contiguous:
+                pytetio[key] = np.ascontiguousarray(value)
 
         if as_dict:
             return pytetio

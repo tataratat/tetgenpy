@@ -11,7 +11,7 @@ import tetgenpy
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "tetgenpy"
-copyright = "2023, Jaewook Lee"
+copyright = "2023, Jaewook Lee"  # noqa A001
 author = "Jaewook Lee"
 release = tetgenpy.__version__
 

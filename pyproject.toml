@@ -90,3 +90,6 @@ exclude = "third_party"
 
 [tool.blackdoc]
 line-length = 75
+
+[tool.codespell]
+ignore-words-list = "addin"

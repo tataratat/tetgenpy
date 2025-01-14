@@ -690,9 +690,9 @@ public:
 
     // infinite vertex is not defined.
     // however for plotting, one could project this to a certain plane.
-    // to make that process a bit easier, followings are provided:
+    // to make that process a bit easier, following are provided:
     // 1. reference to infinite vertex is assigned with negative value
-    //    and it counts down at every occurance. that way, we can just
+    //    and it counts down at every occurrence. that way, we can just
     //    append new points to existing point array.
     // 2. keep track of edge ids with infinite vertex
     // 3. and their normals

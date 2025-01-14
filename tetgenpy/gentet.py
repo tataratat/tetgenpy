@@ -16,7 +16,7 @@ def tetgen_exe(argv):
     Returns
     -------
     exit_code: int
-      Will retun 0 if everything went well. -1 with RuntimeError without
+      Will return 0 if everything went well. -1 with RuntimeError without
       any informative error message.
     """
     try:
