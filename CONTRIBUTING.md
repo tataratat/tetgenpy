@@ -10,7 +10,7 @@ git clone git@github.com:<path-to-your-fork>
 cd tetgenpy  # or <forkname>
 git submodule update --init --recursive
 git checkout -b new-feature0
-python3 setup.py develop
+pip install -e .
 ```
 
 ## Automatic formatting / style check
